@@ -25,27 +25,11 @@ router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleControl
     res.send('editMachine')
 });
 
-// Register page is rendered
-router.get('/register', (req, res) => {
-    res.send('register');
-});
 
 router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
     res.send('service')
 });
 
-
-// login page is rendered
-router.get('/login', (req, res) => {
-    res.send('login');
-});
-
-
-
-// contact page is rendered
-router.get('/contact', function (req, res, next) {
-    res.send('contact');
-});
 
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
