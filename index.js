@@ -49,8 +49,8 @@ mssql.connect(config, function (error) {
     console.log("MsSQL Connected..."); // log to confirm it connected to database
   }
 });
-app.use("/", require("./routes/pages"));
-app.use("/auth", require("./routes/auth"));
+//app.use("/", require("./routes/pages"));
+//app.use("/auth", require("./routes/auth"));
 //app.use('/', require('./routes/pages'));
 //app.use('/auth', require('./routes/auth'));
 
