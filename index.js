@@ -1,24 +1,56 @@
-const express = require('express');
-const path = require('path');
-
+const express = require("express");
+const morgan = require("morgan");
+const path = require("path");
+const mssql = require("mssql");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
+const { signedCookie } = require("cookie-parser");
+const session = require("express-session");
+dotenv.config({ path: "./.env" });
 const app = express();
+var cors = require("cors");
+const PORT = process.env.PORT || 8080;
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
+var config = {
+  server: process.env.DATABASE_HOST,
+  database: process.env.DATABASE,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_password,
+};
 
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-    var list = ["item1", "item2", "item3"];
-    res.json(list);
-    console.log('Sent list of items');
+const publicDirectory = path.join(__dirname, "./public");
+app.use(express.static(publicDirectory));
+
+app.use(
+  cors({
+    origin: "https://thyrrestrupwebapptest.azurewebsites.net/",
+    credentials: true,
+  })
+);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(cookieParser());
+
+//HTTP request logger
+app.use(morgan("tiny"));
+
+console.log(__dirname);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
+
+mssql.connect(config, function (error) {
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("MsSQL Connected..."); // log to confirm it connected to database
+  }
 });
+app.use("/", require("./routes/pages"));
+app.use("/auth", require("./routes/auth"));
+//app.use('/', require('./routes/pages'));
+//app.use('/auth', require('./routes/auth'));
 
-// Handles any requests that don't match the ones above
-app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'/client/build/index.html'));
-});
-
-const port = process.env.PORT || 5000;
-app.listen(port);
-
-console.log('App is listening on port ' + port);
+app.listen(PORT, console.log(`server is starting at ${PORT}`));
