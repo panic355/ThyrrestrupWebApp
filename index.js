@@ -22,7 +22,6 @@ var config = {
 const publicDirectory = path.join(__dirname, "./public");
 app.use(express.static(publicDirectory));
 
-app.set('view engine', 'jade');
 
 app.use(
   cors({
