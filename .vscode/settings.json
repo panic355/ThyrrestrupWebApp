@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/a017c151-f92b-419d-9f8f-36129e11f20e/resourceGroups/thyrrestrupWeb/providers/Microsoft.Web/sites/ThyrrestrupComplete",
+    "appService.deploySubpath": "."
+}
