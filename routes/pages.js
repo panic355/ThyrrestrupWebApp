@@ -13,38 +13,38 @@ const router = express.Router();
 
 // Here we get and render home page
 router.get('/', (req, res) => {
-    res.render('index');
+    res.send('index');
 });
 router.get('/deleteMachine/:vehicleID', authController.isUserOwner, vehicleController.deleteMachine, (req, res, next) => {
-    res.render('deleteMachine')
+    res.send('deleteMachine')
 });
 router.get('/createMachine', (req, res) => {
-    res.render('createMachine');
+    res.send('createMachine');
 });
 router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleController.editMachineLoad, (req, res, next) => {
-    res.render('editMachine')
+    res.send('editMachine')
 });
 
 // Register page is rendered
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.send('register');
 });
 
 router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
-    res.render('service')
+    res.send('service')
 });
 
 
 // login page is rendered
 router.get('/login', (req, res) => {
-    res.render('login');
+    res.send('login');
 });
 
 
 
 // contact page is rendered
 router.get('/contact', function (req, res, next) {
-    res.render('contact');
+    res.send('contact');
 });
 
 // fleet is rendered
@@ -57,6 +57,6 @@ router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
 
 // The router for vehicle is defined, now it can be used to get information to the page
 router.get('/vehicle/:vehicleID', authController.isUserOrOwner, vehicleListingController.vehicle, (req, res, next) => {
-    res.render('vehicle')
+    res.send('vehicle')
 });
 module.exports = router;

@@ -69,13 +69,13 @@ exports.deleteMachine = async (req, res) => {
         console.log(results.recordset)
         if (error) {
             console.log(error);
-            return res.render('deleteMachine', {
+            return res.send('deleteMachine', {
                 message: 'Hov der skete en fejl under sletning' // message is sent to html where it will handle it and show it
             });
         }
         // if an ID is allready used
         if (results.recordset.length <= 0) {
-            return res.render('deleteMachine', {
+            return res.send('deleteMachine', {
                 message: 'Maskinen findes ikke i databasen' // message is sent to html where it will handle it and show it
             });
         }
@@ -87,7 +87,7 @@ exports.deleteMachine = async (req, res) => {
             // logging if an error occurs
             console.log(error);
         } else {
-            return res.render('deleteMachine', {
+            return res.send('deleteMachine', {
                 // This messege will be sent to the html called register and then the html will show it to the user
                 message: 'Maskine slettet' // message is sent to html where it will handle it and show it
             });
@@ -107,7 +107,7 @@ exports.editMachineLoad = async (req, res) => {
         }
         // if an ID is allready used
         if (results.recordset.length <= 0) {
-            return res.render('editMachine', {
+            return res.send('editMachine', {
                 message: 'Dette ID findes ikke i databasen' // message is sent to html where it will handle it and show it
             })
         }
@@ -122,7 +122,7 @@ exports.editMachineLoad = async (req, res) => {
                 }
                 vehicleList.push(vehicle); // everytime the loop goes through one vehicle it wil be pushed to the list
             }
-            res.render('editMachine', { "vehicleList": vehicleList })
+            res.send('editMachine', { "vehicleList": vehicleList })
         }
     });
 
@@ -138,7 +138,7 @@ exports.editMachineEdit = async (req, res) => {
         }
         // if an ID is allready used
         if (results.recordset.length <= 0) {
-            return res.render('editMachine', {
+            return res.send('editMachine', {
                 message: 'Dette ID findes ikke i databasen' // message is sent to html where it will handle it and show it
             })
         }
@@ -149,7 +149,7 @@ exports.editMachineEdit = async (req, res) => {
             // logging if an error occurs
             console.log(error);
         } else {
-            return res.render('./editMachine', {
+            return res.send('./editMachine', {
                 // This messege will be sent to the html called register and then the html will show it to the user
                 message: 'Maskinen blev redigeret' // message is sent to html where it will handle it and show it
             });

@@ -177,7 +177,7 @@ exports.vehicle = async (req, res) => {
         }
         vehicleDataList.push(vehicleData); // the vehicleData is pushed to the list "vehicleDataList"
 
-        res.render('vehicle', { "vehicleDataList": vehicleDataList, "alarms": alarms }); // the vehicle page is rendered and sending the list with it
+        res.send('vehicle', { "vehicleDataList": vehicleDataList, "alarms": alarms }); // the vehicle page is rendered and sending the list with it
     })
 
 

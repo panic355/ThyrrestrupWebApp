@@ -30,12 +30,12 @@ exports.service = async (req, res) => {
             console.log("failed to query for service: " + err)
             return
         }
-        res.render('fleet');
+        res.send('fleet');
     });
 }
 
 exports.serviceLoad = async (req, res) => {
     var vehicleID = req.params.vehicleID
     console.log(vehicleID)
-    res.render('service', { vehicleID })
+    res.send({ vehicleID })
 }
