@@ -9,10 +9,11 @@ var contactCard = CreateReactClass({
      return (
        <div>
          <div className="card mb-3">
-           <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/se2d7155d6368abec/image/i1a65fa82efc209c9/version/1477465477/image.jpg" className="card-img-top" style={{width: '700x', height: '350px'}} alt="..." />
+           <img src="https://image.jimcdn.com/app/cms/image/transf/none/path/se2d7155d6368abec/image/i1a65fa82efc209c9/version/1477465477/image.jpg" className="card-img-top" style={{width: '900px', height: '350px', margin: 'auto' }} alt="..." />
            <div className="card-body">
              <h5 className="card-title">Kontakt</h5>
-             <p className="card-text">Telefon: +45 22  42 30 50 Email: info@tmink.dk Åbningstider: Mandag til torsdag: 8:00 - 16:00 Fredag: 8:00 - 14:00</p>
+             <p className="card-text">Telefon: +45 22  42 30 50 Email: info@tmink.dk</p>
+             <p className="card-text">Åbningstider: Mandag til torsdag: 8:00 - 16:00 Fredag: 8:00 - 14:00</p>
            </div>
          </div>
          <div className="card">
