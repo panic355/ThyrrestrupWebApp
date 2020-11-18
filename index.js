@@ -16,7 +16,7 @@ var config = {
   server: process.env.DATABASE_HOST,
   database: process.env.DATABASE,
   user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_password,
+  password: process.env.DATABASE_PASSWORD,
 };
 
 const publicDirectory = path.join(__dirname, "./public");
