@@ -25,7 +25,7 @@ app.use(express.static(publicDirectory));
 
 app.use(
   cors({
-    origin: "https://thyrrestrupwebapp.herokuapp.com/",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -52,6 +52,10 @@ mssql.connect(config, function (error) {
   } else {
     console.log("MsSQL Connected..."); // log to confirm it connected to database
   }
+});
+
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 
