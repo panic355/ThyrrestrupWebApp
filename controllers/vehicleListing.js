@@ -21,22 +21,26 @@ mssql.connect(config, function (err) {
 
 
 exports.fleet = async (req, res) => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsImVtYWlsIjoibWFuQGRhbS5kayIsImhhc2hlZFBhc3N3b3JkIjoiMTIzNDUiLCJhZG1pbiI6Ik93bmVyIiwiaWF0IjoxNjAzODg0NDI0LCJleHAiOjE2MTE2NjA0MjR9.niJe8_EhHyIRvh3wIrrJ_L9xt38F2EPEvLk2xlR3kxQ'
+    /*console.log(req.headers)
+    const token = req.cookies.jwt
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     var personID = decoded.id
-    var userRights = decoded.admin
+    */
+    var userRights = 'User';
 
     var statement = ("");
     var anArray = [];
 
     var vehicleList = []; // the list for vehicles is initiated
     if (userRights == 'User') { 
-        statement = ("select * from Vehicles where personID ="+personID)
+        statement = ("select * from Vehicles where vehicleID is not null")
     }
 
+/*
     if (userRights == 'Owner') {
         statement = ("select * from Vehicles")
     }
+*/
 
     request.query(statement, (err, vehiclesResult) => {
         if (err) {
@@ -63,14 +67,14 @@ exports.fleet = async (req, res) => {
        t = anArray.toString()
        console.log(t)
        
-        request.query("SELECT vehicleID, max(timeSinceMotService) timeSinceMotService FROM VehicleDatas where vehicleID IN ("+t+") and timeSinceMotService is not null group by vehicleID order by vehicleID", (err, result) => {
+        request.query("SELECT vehicleID, max(timeSinceMotService) timeSinceMotService FROM VehicleDatas where timeSinceMotService is not null group by vehicleID order by vehicleID", (err, result) => {
             if (err) {
                 console.log("failed to query for vehicles: " + err)
                 res.sendStatus(500)
                 return
             }
             if (!result.recordset[0]) {
-                console.log("No vehicles on this customer: ")
+                console.log("No vehicles on this customers: ")
                 res.sendStatus(500)
                 return
             }
@@ -95,8 +99,8 @@ exports.fleet = async (req, res) => {
 }
 
 
-
-exports.vehicle = async (req, res) => {
+// this method handles alarms and puts a text string instead of a numeric value
+exports.vehicle = async (req, res) => { // this method needs a VehicleID to work
     var vehicleID = req.params.vehicleID
     console.log(vehicleID);
     var vehicleDataList = [];
@@ -112,7 +116,7 @@ exports.vehicle = async (req, res) => {
 
             alu = alarmsResult.recordset[0].alarmCode
             // Chained replacements will now change the numbers out with values such as "hydraulic Temp Too High"
-            var replaceStringVals = alu.
+            var replaceStringVals = alu. 
                 replace('0', 'Hydraulic Temp. Warning').
                 replace('1', 'Hydraulic Temp. Too High').
                 replace('2', 'Hydraulic Sensor Fault').
@@ -139,6 +143,7 @@ exports.vehicle = async (req, res) => {
                 replace('23', 'Hydraulic Service Now');
 
 
+                // now the alarms are put into an array so it can be send the page
             for (var i = 0; i < alarmsResult.recordset.length; i++) {
                 var alarm = {
                     'alarmCode': replaceStringVals,
@@ -151,7 +156,7 @@ exports.vehicle = async (req, res) => {
 
     })
 
-    request.query("select * from [dbo].[VehicleDatas] where vehicleID =" + vehicleID, (err, result) => {
+    request.query("select * from [dbo].[VehicleDatas] where vehicleID =" + vehicleID, (err, result) => { // Get fields from the vehicledata table where id =? and then puts it pass it to result
         // Here is the error handling of the query, if an error or no result happens code will run the if statement
         if (err || result.recordset.length < 1) {
             console.log("failed to query for vehicles: " + err)
@@ -177,7 +182,7 @@ exports.vehicle = async (req, res) => {
         }
         vehicleDataList.push(vehicleData); // the vehicleData is pushed to the list "vehicleDataList"
 
-        res.send('vehicle', { "vehicleDataList": vehicleDataList, "alarms": alarms }); // the vehicle page is rendered and sending the list with it
+        res.send({ "vehicleDataList": vehicleDataList, "alarms": alarms }); // the vehicle page is rendered and sending the list with it
     })
 
 

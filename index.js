@@ -25,7 +25,7 @@ app.use(express.static(publicDirectory));
 
 app.use(
   cors({
-    origin: "https://thyrrestrupwebapptest.azurewebsites.net/",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -35,6 +35,12 @@ app.use(cookieParser());
 
 //HTTP request logger
 app.use(morgan("tiny"));
+
+
+app.get("/fleet", function (req, res) {
+  res.get('/fleet');
+});
+
 
 console.log(__dirname);
 
@@ -50,9 +56,8 @@ mssql.connect(config, function (error) {
     console.log("MsSQL Connected..."); // log to confirm it connected to database
   }
 });
-//app.use("/", require("./routes/pages"));
-//app.use("/auth", require("./routes/auth"));
-//app.use('/', require('./routes/pages'));
-//app.use('/auth', require('./routes/auth'));
+
+app.use('/', require('./routes/pages'));
+app.use('/auth', require('./routes/auth'));
 
 app.listen(PORT, console.log(`server is starting at ${PORT}`));
