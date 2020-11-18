@@ -37,9 +37,6 @@ app.use(cookieParser());
 app.use(morgan("tiny"));
 
 
-app.get("/fleet", function (req, res) {
-  res.get('/fleet');
-});
 
 
 console.log(__dirname);
