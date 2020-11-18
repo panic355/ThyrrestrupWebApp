@@ -35,6 +35,7 @@ router.get('/service/:vehicleID', authController.isUserOwner, serviceController.
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
     axios.get('fleet')
     .then(response => {
+        res.sendFile(path.join(__dirname, "client/build", "index.html"));
       res.send(response.data);
     });
 });
