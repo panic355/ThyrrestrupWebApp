@@ -32,7 +32,7 @@ class BootstrapNavbar extends React.Component {
                                         <Nav.Link href="/">Home</Nav.Link>
                                         <Nav.Link href="/register">Register</Nav.Link>
                                         <Nav.Link href="/contact">Contact Us</Nav.Link>
-                                        <Nav.Link href="/fleet">Flåde</Nav.Link>
+                                        <Nav.Link href="/fleet">Flådee</Nav.Link>
                                         <Nav.Link href="/contact-us">About Us</Nav.Link>
                                         <Nav.Link href="/login">Login</Nav.Link>
                                         <Nav.Link href="/createMachine">CreateMachine</Nav.Link>
