@@ -18,9 +18,7 @@ var config = {
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
 };
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
+
 const publicDirectory = path.join(__dirname, "./public");
 app.use(express.static(publicDirectory));
 
@@ -63,6 +61,8 @@ mssql.connect(config, function (error) {
 app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
-
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 app.listen(PORT, console.log(`server is starting at ${PORT}`));

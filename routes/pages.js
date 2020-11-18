@@ -33,7 +33,10 @@ router.get('/service/:vehicleID', authController.isUserOwner, serviceController.
 
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
-    res.send('fleet')
+    axios.get('fleet')
+    .then(response => {
+      res.send(response.data);
+    });
 });
 
 // The router for vehicle is defined, now it can be used to get information to the page
