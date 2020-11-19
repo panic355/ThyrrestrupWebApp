@@ -54,17 +54,18 @@ mssql.connect(config, function (error) {
   }
 });
 
+var jsonString = "{'vehicleID': '543', 'type': 'StorMaskine', 'powerBILink': 'power.dk', 'personID': '1', 'timeSinceMotService': 221},";
+
+app.get("/fleet", function (req, res) {
+  res.json(jsonString)
+});
 
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
-
-app.use('/', require('./routes/pages'));
+//app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
-app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
-});
 
 app.listen(PORT, console.log(`server is starting at ${PORT}`));
