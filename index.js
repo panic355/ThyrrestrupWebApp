@@ -54,7 +54,13 @@ mssql.connect(config, function (error) {
   }
 });
 
-var jsonString = "{'vehicleID': '543', 'type': 'StorMaskine', 'powerBILink': 'power.dk', 'personID': '1', 'timeSinceMotService': 221},";
+ var jsonString = {
+  'vehicleID': '3421',
+  'type': 'StorMaskine',
+  'powerBILink': 'Power.comme',
+  'personID': '1',
+  'timeSinceMotService': '211'
+}
 
 app.get("/fleet", function (req, res) {
   res.json(jsonString)
