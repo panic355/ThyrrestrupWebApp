@@ -42,7 +42,7 @@ app.use(morgan("tiny"));
 console.log(__dirname);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 
@@ -68,7 +68,7 @@ app.get("/fleet", function (req, res) {
 });
 
 app.get("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
 });
 
 //app.use('/', require('./routes/pages'));
