@@ -62,12 +62,16 @@ mssql.connect(config, function (error) {
   'timeSinceMotService': '211'
 }
 
+app.get("/fleet", function (req, res) {
+  console.log('getting fleet');
+  res.json(jsonString);
+});
 
 app.get("*", function (req, res) {
   res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
-app.use('/', require('./routes/pages'));
+//app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
 

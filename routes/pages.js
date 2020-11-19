@@ -33,6 +33,7 @@ router.get('/service/:vehicleID', authController.isUserOwner, serviceController.
 
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
+    console.log('found path');
     axios.get('fleet')
     .then(response => {
       res.send(response.data);

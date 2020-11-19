@@ -7,12 +7,16 @@ export default class fetchVechicleList extends React.Component {
     vehicleList: []
   };
   async componentDidMount() {
-    const url = "http://localhost:8080/fleet";
+/*     const url = "http://localhost:8080/fleet";
     const response = await fetch(url);
     const data = await response.json();
     console.log({vehicleList: data});
     console.log(data);
     this.setState({vehicleList: data, loading: false});
+ */
+      fetch('/fleet')
+        .then(res => res.json())
+        .then(vehicleList => this.setState({ vehicleList, loading: false }));
   }
 
   render() {

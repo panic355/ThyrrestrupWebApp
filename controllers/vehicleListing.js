@@ -92,6 +92,7 @@ exports.fleet = async (req, res) => {
                 vehicleList.push(vehicle); // everytime the loop goes thorugh one vehicle it wil be pushed to the list
             }
             //{ "vehicleDataList": vehicleDataList, "alarms": alarms }
+            console.log('sending data');
             res.json(vehicleList)
         }
         });
