@@ -55,7 +55,9 @@ mssql.connect(config, function (error) {
 });
 
 
-
+app.get("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 
 
 app.use('/', require('./routes/pages'));
