@@ -6,7 +6,6 @@ dotenv.config({ path: "./.env" });
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
     server: process.env.DATABASE_HOST,
-    //port: 1433,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE
