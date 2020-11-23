@@ -1,8 +1,7 @@
-# Rando
+# Thyrrestrup Web Dashboard
 
-A password generator built with React and Express.
+A web dash for controlling machines.
 
-This is a minimal demo of using Create React App to bootstrap a React project, connect the React app to an Express backend, and deploy the whole thing to Heroku.
 
 Read the blog post: [Create React App with Express in
 Production](https://daveceddia.com/create-react-app-express-production/)
