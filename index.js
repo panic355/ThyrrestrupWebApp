@@ -39,7 +39,7 @@ var jsonString = {
 }
 
 //app.use('/', require('./routes/pages'));
-//app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 
 // Put all API endpoints under '/api'
 app.get('/api/passwords', (req, res) => {
