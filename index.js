@@ -30,31 +30,10 @@ mssql.connect(config, function (error) {
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-var jsonString = {
-  'vehicleID': '3421',
-  'type': 'StorMaskine',
-  'powerBILink': 'Power.comme',
-  'personID': '1',
-  'timeSinceMotService': '211'
-}
-
 //app.use('/', require('./routes/pages'));
 app.use('/auth', require('./routes/auth'));
 
 // Put all API endpoints under '/api'
-app.get('/api/passwords', (req, res) => {
-  const count = 5;
-
-  // Generate some passwords
-  const passwords = Array.from(Array(count).keys()).map(i =>
-    generatePassword(12, false)
-  )
-
-  // Return them as json
-  res.json(passwords);
-
-  console.log(`Sent ${count} passwords`);
-});
 
 app.get('/fleet', (req, res) => {
   var userRights = 'User';
@@ -129,7 +108,6 @@ app.get('/fleet', (req, res) => {
         });
     });
   });
-
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import React, { Component } from "react";
+
+import React from "react";
 var CreateReactClass = require('create-react-class');
 
 var registerForm = CreateReactClass({

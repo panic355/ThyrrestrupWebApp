@@ -3,9 +3,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    useParams,
 } from "react-router-dom";
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Image } from 'react-bootstrap'
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
 import Home from '../homePage/HomeJumbotron';
 import Register from '../register/RegisterForm';
 import Contact from '../contactPage/ContactCard';
@@ -24,7 +23,7 @@ class BootstrapNavbar extends React.Component {
                         <Router>
                             <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
                                 <Navbar.Brand href="#home">
-                                    <img src={logo} height="50fr" ></img> 
+                                    <img src={logo} height="50fr" alt='fancy_logo'></img> 
                                 </Navbar.Brand>
                                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                                 <Navbar.Collapse id="basic-navbar-nav">
@@ -33,13 +32,6 @@ class BootstrapNavbar extends React.Component {
                                         <Nav.Link href="/fleet">Flåde</Nav.Link>
                                         <Nav.Link href="/contact-us">Om os</Nav.Link>
                                         <Nav.Link href="/createMachine">Lav maskine</Nav.Link>
-                                        {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                                        </NavDropdown> */}
                                         <Nav.Link href="/login">Login</Nav.Link>
                                         <Nav.Link href="/register">Register</Nav.Link>
                                     </Nav>

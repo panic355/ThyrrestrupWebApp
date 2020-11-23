@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import React, {Component} from "react";
-import axios from 'axios';
+
+import React from "react";
 
 var CreateReactClass = require('create-react-class');
 
