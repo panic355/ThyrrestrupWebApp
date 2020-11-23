@@ -1,8 +1,7 @@
 const mssql = require("mssql");
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const cookieParser = require('cookie-parser')
 var request = new mssql.Request();
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
 
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
