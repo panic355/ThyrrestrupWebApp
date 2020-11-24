@@ -21,7 +21,6 @@ mssql.connect(config, function (err) {
 })
 
 exports.login = async (req, res) => {
-
     try {
 
 
@@ -31,7 +30,7 @@ exports.login = async (req, res) => {
         }
 
         // This query is for login and will check if the email exists in a user
-        request.query("Select * FROM Persons WHERE email =('" + email + "')", async (error, results) => {
+        request.query("Select * FROM Persons WHERE email =('"+email+"')", async (error, results) => {
 
             // here we have error handling for the query
             if (!results.recordset[0] || !(await bcrypt.compare(password, (results.recordset[0].password)))) {
@@ -39,10 +38,12 @@ exports.login = async (req, res) => {
 
                 // if there's no error and both password and email is correct it will go in this else statement
             } else {
-                var id = results.recordset[0].id;
+                var id = results.recordset[0].personID;
                 var email = results.recordset[0].email;
                 var hashedPassword = results.recordset[0].password;
                 var admin = results.recordset[0].admin;
+                console.log('test' + results.recordset[0].personID)
+
 
                 console.log(results.recordset[0].password)
                 const token = jwt.sign({ id: id, email: email, hashedPassword: password, admin: admin}, process.env.JWT_SECRET, {
@@ -65,6 +66,8 @@ exports.login = async (req, res) => {
            //console.log("token is pass: "+decoded.password)
             console.log("token is userights: "+decoded.admin)
             console.log("token is email: "+decoded.email)
+            console.log("token is id: "+decoded.id)
+
             console.log("token is: "+req.cookies.jwt) //testing code, seeing if the cookie/jsonwebtoken works
         });
     } catch (error) {
