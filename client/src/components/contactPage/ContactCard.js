@@ -1,4 +1,3 @@
-
 import React from "react";
 
 var CreateReactClass = require('create-react-class');

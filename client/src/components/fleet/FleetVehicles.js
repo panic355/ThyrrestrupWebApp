@@ -10,6 +10,7 @@ export default class fetchVechicleList extends React.Component {
     fetch("/fleet")
       .then((res) => res.json())
       .then((vehicleList) => this.setState({ vehicleList, loading: false }));
+      console.log(this.state.vehicleList);
   }
 
   render() {

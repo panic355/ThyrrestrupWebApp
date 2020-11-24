@@ -13,9 +13,23 @@ import CreateMachine from '../createMachine/CreateMachine';
 import Login from '../Login/LoginForm';
 import FleetVehicles from '../fleet/FleetVehicles';
 import logo from './logoWhite.svg'
-//const logo = require('./logoDark.png');
+import Cookies from 'js-cookie';
+
 class BootstrapNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        LoggedIn: false,
+      };
+    }
+    async componentDidMount() {
+       fetch("/api/check")
+      .then((res) => res.json())
+      .then((data) => this.setState({ LoggedIn: data.active }));
+    }
     render() {
+        console.log(this.state.LoggedIn);
+    
         return (
             <div>
                 <div className="row">
@@ -29,11 +43,12 @@ class BootstrapNavbar extends React.Component {
                                 <Navbar.Collapse id="basic-navbar-nav">
                                     <Nav className="mr-auto">
                                         <Nav.Link href="/">Hjem</Nav.Link>
-                                        <Nav.Link href="/fleet">Flåde</Nav.Link>
                                         <Nav.Link href="/contact-us">Om os</Nav.Link>
-                                        <Nav.Link href="/createMachine">Lav maskine</Nav.Link>
-                                        <Nav.Link href="/login">Login</Nav.Link>
-                                        <Nav.Link href="/register">Register</Nav.Link>
+                                        {this.state.LoggedIn && <Nav.Link>Log ud</Nav.Link>}
+                                        {!this.state.LoggedIn && <Nav.Link href="/login">Log ind</Nav.Link>}
+                                        {this.state.LoggedIn && <Nav.Link href="/register" >Register</Nav.Link>}
+                                        {this.state.LoggedIn && <Nav.Link href="/fleet">Flåde</Nav.Link>}
+                                        {this.state.LoggedIn && <Nav.Link href="/createMachine">Lav maskine</Nav.Link>}
                                     </Nav>
                                     <Form inline>
                                         <FormControl type="text" placeholder="Søgefelt" className="mr-sm-2" />

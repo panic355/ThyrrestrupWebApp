@@ -11,7 +11,8 @@ dotenv.config({ path: "./.env" });
 const auth = require('./routes/auth');
 var cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const { readSync } = require('fs');
 
 
 const app = express();
@@ -46,7 +47,14 @@ app.use('/', require('./routes/pages'));
 app.use('/auth', auth);
 
 // Put all API endpoints under '/api'
+app.get('/api/check', (req, res) => {
+  let response = false;
 
+  if(req.cookies.jwt) {
+    response = true;
+}
+res.json({ active: response });
+});
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
@@ -57,4 +65,4 @@ app.get('*', (req, res) => {
 
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
+console.log(`Server listening on ${port}`);
