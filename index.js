@@ -8,6 +8,10 @@ const vehicleListingController = require('./controllers/vehicleListing');
 var request = new mssql.Request();
 const port = process.env.PORT || 5000;
 dotenv.config({ path: "./.env" });
+const auth = require('./routes/auth');
+
+
+
 
 const app = express();
 
@@ -25,13 +29,17 @@ mssql.connect(config, function (error) {
     console.log("MsSQL Connected..."); // log to confirm it connected to database
   }
 });
-
+app.use(
+  express.urlencoded({
+    extended: true
+  })
+)
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 //app.use('/', require('./routes/pages'));
-app.use('/auth', require('./routes/auth'));
+app.use('/auth', auth);
 
 // Put all API endpoints under '/api'
 
