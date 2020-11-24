@@ -4,102 +4,112 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
 
 
+var cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken')
+
+
+
+
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
     server: process.env.DATABASE_HOST,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE
+  database: process.env.DATABASE,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
 
 });
-mssql.connect(config, function (err) {
 
-    if (err) console.log(err);
 
-})
+mssql.connect(config, function (error) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log("MsSQL Connected..."); // log to confirm it connected to database
+    }
+  });
 
 
 exports.fleet = async (req, res) => {
-    /*console.log(req.headers)
+    var request = new mssql.Request();
     const token = req.cookies.jwt
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    var personID = decoded.id
-    */
-
-   
+   //console.log("token is pass: "+decoded.password)
+    console.log("token is userights: "+decoded.admin)
+    console.log("token is email: "+decoded.email)
+    console.log("token is: "+req.cookies.jwt) //testing code, seeing if the cookie/jsonwebtoken works
+  
     var userRights = 'User';
-
-    var statement = ("");
-    var anArray = [];
-
-    var vehicleList = []; // the list for vehicles is initiated
-    if (userRights == 'User') { 
-        statement = ("select * from Vehicles where vehicleID is not null")
-    }
-
-/*
-    if (userRights == 'Owner') {
-        statement = ("select * from Vehicles")
-    }
-*/
-
-    request.query(statement, (err, vehiclesResult) => {
-        if (err) {
-            console.log("failed to query for vehicles: " + err)
-            res.sendStatus(500)
-            return
-        }
-
-        if (!vehiclesResult.recordset) {
-            console.log("No vehicles on this customer: ")
-            res.sendStatus(500)
-            return
-        }
-        
-        for (var i = 0; i < vehiclesResult.recordset.length; i++) {
-            var vehicleIDs = {
-                'vehicleID': vehiclesResult.recordset[i].vehicleID,
-            }
-            anArray.push(vehiclesResult.recordset[i].vehicleID); //
-        }
-        
-       // var anID = vehiclesResult.recordset.vehicleID
-        // query all vehicles
-       t = anArray.toString()
-       console.log(t)
-       
-        request.query("SELECT vehicleID, max(timeSinceMotService) timeSinceMotService FROM VehicleDatas where timeSinceMotService is not null group by vehicleID order by vehicleID", (err, result) => {
-            if (err) {
-                console.log("failed to query for vehicles: " + err)
-                res.sendStatus(500)
-                return
-            }
-            if (!result.recordset[0]) {
-                console.log("No vehicles on this customers: ")
-                res.sendStatus(500)
-                return
-            }
-            else {
-
-            // The list is populated using result.recordset and then looping through all the results
-            for (var i = 0; i < vehiclesResult.recordset.length; i++) {
-                var vehicle = {
-                    'vehicleID': vehiclesResult.recordset[i].vehicleID,
-                    'type': vehiclesResult.recordset[i].type,
-                    'powerBILink': vehiclesResult.recordset[i].powerBILink,
-                    'personID': vehiclesResult.recordset[i].personID,
-                    'timeSinceMotService': result.recordset[i].timeSinceMotService
-                }
-                vehicleList.push(vehicle); // everytime the loop goes thorugh one vehicle it wil be pushed to the list
-            }
-            //{ "vehicleDataList": vehicleDataList, "alarms": alarms }
-            console.log('sending data');
-            res.json(vehicleList)
-        }
-        });
-    });
+  
+      var statement = ("");
+      var anArray = [];
+  
+      var vehicleList = []; // the list for vehicles is initiated
+      if (userRights == 'User') { 
+          statement = ("select * from Vehicles where vehicleID is not null")
+      }
+  
+  /*
+      if (userRights == 'Owner') {
+          statement = ("select * from Vehicles")
+      }
+  */
+  
+      request.query(statement, (err, vehiclesResult) => {
+          if (err) {
+              console.log("failed to query for vehicles: " + err)
+              res.sendStatus(500)
+              return
+          }
+  
+          if (!vehiclesResult.recordset) {
+              console.log("No vehicles on this customer: ")
+              res.sendStatus(500)
+              return
+          }
+          
+          for (var i = 0; i < vehiclesResult.recordset.length; i++) {
+              var vehicleIDs = {
+                  'vehicleID': vehiclesResult.recordset[i].vehicleID,
+              }
+              anArray.push(vehiclesResult.recordset[i].vehicleID); //
+          }
+          
+         // var anID = vehiclesResult.recordset.vehicleID
+          // query all vehicles
+         t = anArray.toString()
+         console.log(t)
+         
+          request.query("SELECT vehicleID, max(timeSinceMotService) timeSinceMotService FROM VehicleDatas where timeSinceMotService is not null group by vehicleID order by vehicleID", (err, result) => {
+              if (err) {
+                  console.log("failed to query for vehicles: " + err)
+                  res.sendStatus(500)
+                  return
+              }
+              if (!result.recordset[0]) {
+                  console.log("No vehicles on this customers: ")
+                  res.sendStatus(500)
+                  return
+              }
+              else {
+  
+              // The list is populated using result.recordset and then looping through all the results
+              for (var i = 0; i < vehiclesResult.recordset.length; i++) {
+                  var vehicle = {
+                      'vehicleID': vehiclesResult.recordset[i].vehicleID,
+                      'type': vehiclesResult.recordset[i].type,
+                      'powerBILink': vehiclesResult.recordset[i].powerBILink,
+                      'personID': vehiclesResult.recordset[i].personID,
+                      'timeSinceMotService': result.recordset[i].timeSinceMotService
+                  }
+                  vehicleList.push(vehicle); // everytime the loop goes thorugh one vehicle it wil be pushed to the list
+              }
+              //{ "vehicleDataList": vehicleDataList, "alarms": alarms }
+              console.log('sending data');
+              res.json(vehicleList)
+          }
+          });
+      });
 }
-
 
 // this method handles alarms and puts a text string instead of a numeric value
 exports.vehicle = async (req, res) => { // this method needs a VehicleID to work
