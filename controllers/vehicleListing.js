@@ -3,6 +3,7 @@ var request = new mssql.Request();
 const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
 
+
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
     server: process.env.DATABASE_HOST,
@@ -24,6 +25,8 @@ exports.fleet = async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     var personID = decoded.id
     */
+
+   
     var userRights = 'User';
 
     var statement = ("");

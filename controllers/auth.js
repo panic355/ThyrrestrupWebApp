@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
                     expiresIn: process.env.JWT_EXPIRES_IN
                 })
 
-                // console.log("The token is:" + token);
+                 console.log("The token is:" + token);
 
                 const cookieOptions = {
                     expires: new Date(
@@ -73,6 +73,7 @@ exports.login = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
+    
     console.log(req.body);
 
     const { name, email, password, passwordConfirm } = req.body; // here the input from the user is retrieved from the body of the html

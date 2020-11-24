@@ -9,8 +9,9 @@ var request = new mssql.Request();
 const port = process.env.PORT || 5000;
 dotenv.config({ path: "./.env" });
 const auth = require('./routes/auth');
-
-
+var cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(
     extended: true
   })
 )
+app.use(cookieParser());
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -41,9 +43,18 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 //app.use('/', require('./routes/pages'));
 app.use('/auth', auth);
 
+
 // Put all API endpoints under '/api'
 
 app.get('/fleet', (req, res) => {
+
+  const token = req.cookies.jwt
+            const decoded = jwt.verify(token, process.env.JWT_SECRET)
+           //console.log("token is pass: "+decoded.password)
+            console.log("token is userights: "+decoded.admin)
+            console.log("token is email: "+decoded.email)
+            console.log("token is: "+req.cookies.jwt) //testing code, seeing if the cookie/jsonwebtoken works
+
   var userRights = 'User';
 
     var statement = ("");
