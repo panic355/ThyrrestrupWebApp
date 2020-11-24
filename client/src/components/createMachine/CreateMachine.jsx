@@ -30,6 +30,12 @@ var createMachineContainer = CreateReactClass({
                   <label htmlFor="personID">Person ID</label>
                   <input type="text" className="form-control" id="personID" name="personID" />
                 </div>
+                <div className="form-group">
+                  <label htmlFor="timeSinceMotService">Tid til service check</label>
+                  <input type="text" className="form-control" id="timeSinceMotService" name="timeSinceMotService" />
+                </div>
+
+
                 <button type="submit" className="btn btn-primary">Opret Maskine</button>
               </form>
             </div>
