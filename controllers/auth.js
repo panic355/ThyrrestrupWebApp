@@ -2,6 +2,8 @@ const mssql = require("mssql");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
+const nodemailer = require('nodemailer');
+
 
 var request = new mssql.Request();
 
@@ -19,6 +21,18 @@ mssql.connect(config, function (err) {
     if (err) console.log(err);
 
 })
+
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: 'smtp.mailtrap.io',
+    //port: 5000,
+    auth: {
+      user: 'projektminkthyrrestrup@gmail.com',
+      pass: 'axmnzjlphpercaqs'
+    }
+  });
+
 
 exports.login = async (req, res) => {
     try {
@@ -76,7 +90,7 @@ exports.login = async (req, res) => {
 }
 
 exports.register = async (req, res) => {
-    
+    var request = new mssql.Request();
     console.log(req.body);
 
     const { name, email, password, passwordConfirm } = req.body; // here the input from the user is retrieved from the body of the html
@@ -110,6 +124,23 @@ exports.register = async (req, res) => {
                 // logging if an error occurs
                 console.log(error);
             } else {
+                
+                var mailOptions = {
+                    from: 'projektminkthyrrestrup@gmail.com',
+                    to: email,
+                    subject: 'Vehicle purchase at ThyrrestrupProjektMink',
+                    text: 'That was easy!'
+                  };
+                  
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+
+
                 return res.redirect('/')  /*, {
                     // This messege will be sent to the html called register and then the html will show it to the user
                     message: 'User registered' // message is sent to html where it will handle it and show it
