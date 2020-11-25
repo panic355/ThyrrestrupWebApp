@@ -4,11 +4,11 @@ const generatePassword = require('password-generator');
 const mssql = require("mssql");
 const dotenv = require("dotenv");
 const axios = require('axios');
-const vehicleListingController = require('./controllers/vehicleListing');
 var request = new mssql.Request();
 const port = process.env.PORT || 5000;
 dotenv.config({ path: "./.env" });
 const auth = require('./routes/auth');
+const pages = require('./routes/pages');
 var cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
@@ -43,7 +43,7 @@ app.use(cookieParser());
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.use('/', require('./routes/pages'));
+app.use('/', pages);
 app.use('/auth', auth);
 
 // Put all API endpoints under '/api'
