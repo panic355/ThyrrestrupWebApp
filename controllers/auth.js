@@ -163,6 +163,20 @@ exports.serviceLoad = async (req, res) => {
     res.send({ vehicleID })
 }
 
+exports.status = async (req, res) => {
+    let response = false;
+
+    if(req.cookies.jwt) {
+      response = true;
+  }
+  res.json({ active: response });
+}
+
+exports.logout = async (req, res) => {
+    res.clearCookie('jwt');
+    res.json({ active: false });
+}
+
 /*
 exports.authenticate = async (req, res, next) => {
     const token = req.cookies.jwt

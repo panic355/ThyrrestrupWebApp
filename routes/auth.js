@@ -15,8 +15,11 @@ router.post('/deleteMachine', vehicleController.deleteMachine);
 
 router.post('/service', serviceController.service);
 
-router.post('/editMachine', vehicleController.editMachineEdit)
+router.post('/editMachine', vehicleController.editMachineEdit);
 
+router.get('/status', authController.status);
+
+router.get('/logout', authController.logout);
 //router.post('/service', authController.servicePost)
 
 

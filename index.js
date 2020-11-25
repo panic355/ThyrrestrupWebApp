@@ -46,16 +46,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/', require('./routes/pages'));
 app.use('/auth', auth);
 
-// Put all API endpoints under '/api'
-app.get('/api/check', (req, res) => {
-  let response = false;
-
-  if(req.cookies.jwt) {
-    response = true;
-}
-res.json({ active: response });
-});
-
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
