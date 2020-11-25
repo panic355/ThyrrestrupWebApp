@@ -33,6 +33,11 @@ var registerForm = CreateReactClass({
                         <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"/>
                     </div>
 
+                    <div class="form-group">
+                        <label for="name">Bruger type (Owner eller User)</label>
+                        <input type="text" class="form-control" id="admin" name ="admin"/>
+                    </div>
+
                     <button type="submit" class="btn btn-primary">Register User</button>
                 </form>
             </div>
