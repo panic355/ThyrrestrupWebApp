@@ -2,7 +2,8 @@ const mssql = require("mssql");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
-const nodemailer = require('nodemailer');
+
+const nodemailer = require('nodemailer'); // this is a library for sendding emails
 
 
 var request = new mssql.Request();
@@ -75,14 +76,6 @@ exports.login = async (req, res) => {
                 res.cookie('jwt', token, cookieOptions);
                 res.status(200).redirect("/");
             }
-            const token = req.cookies.jwt
-            const decoded = jwt.verify(token, process.env.JWT_SECRET)
-           //console.log("token is pass: "+decoded.password)
-            console.log("token is userights: "+decoded.admin)
-            console.log("token is email: "+decoded.email)
-            console.log("token is id: "+decoded.id)
-
-            console.log("token is: "+req.cookies.jwt) //testing code, seeing if the cookie/jsonwebtoken works
         });
     } catch (error) {
         console.log(error);
@@ -93,7 +86,7 @@ exports.register = async (req, res) => {
     var request = new mssql.Request();
     console.log(req.body);
 
-    const { name, email, password, passwordConfirm } = req.body; // here the input from the user is retrieved from the body of the html
+    const { name, email, password, passwordConfirm, admin } = req.body; // here the input from the user is retrieved from the body of the html
 
     // this query will check if a user is registered under that email
     request.query("SELECT email FROM Persons WHERE email = ('" + email + "')", async (error, results) => {
@@ -119,7 +112,7 @@ exports.register = async (req, res) => {
         console.log(hashedPassword)
 
         // here we query email, name, hashedpassword and insert it into the database
-        request.query("INSERT INTO Persons (email, surName, password) VALUES ('" + email + "',+'" + name + "',+'" + hashedPassword + "')", (error, results) => {
+        request.query("INSERT INTO Persons (email, surName, password, admin) VALUES ('" + email + "',+'" + name + "',+'" + hashedPassword + "','" + admin + "')", (error, results) => {
             if (error) {
                 // logging if an error occurs
                 console.log(error);
