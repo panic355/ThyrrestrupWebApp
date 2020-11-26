@@ -1,16 +1,34 @@
 import React from "react";
-
+import Report from "../powerbi/chart";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 export default class fetchVechicleList extends React.Component {
   state = {
     loading: true,
     vehicleList: [],
+    updateLoading: false,
+    updateResponse: "",
   };
   async componentDidMount() {
     fetch("/fleet")
       .then((res) => res.json())
       .then((vehicleList) => this.setState({ vehicleList, loading: false }));
-      console.log(this.state.vehicleList);
+    console.log(this.state.vehicleList);
+  }
+
+  async handleUpdate() {
+    var requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ command: "update" }),
+    };
+
+    fetch("/updateMachine", requestOptions)
+      .then((res) => res.json())
+      .then((updateResponse) =>
+        this.setState({})
+      );
   }
 
   render() {
@@ -88,6 +106,12 @@ export default class fetchVechicleList extends React.Component {
                       (window.location.href = "/service/" + vehicle.vehicleID)
                     }
                   />
+                  <input
+                    type="submit"
+                    value="Opdater maskine"
+                    className="btn btn-primary mr-1"
+                    onClick={() => this.handleUpdate()}
+                  />
                 </div>
               </a>
             </div>
@@ -95,10 +119,5 @@ export default class fetchVechicleList extends React.Component {
         ))}
       </div>
     );
-    /*{this.state.vehicleList.map(vehicle => (
-        <div key={vehicle.vehicleID}>
-        <div> {vehicle.vehicleID} </div>
-        <div> {vehicle.timeSinceMotService} </div>
-        </div>*/
   }
 }

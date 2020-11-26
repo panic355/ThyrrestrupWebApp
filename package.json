@@ -12,7 +12,8 @@
     "jsonwebtoken": "^8.5.1",
     "mssql": "^6.2.3",
     "nodemailer": "^6.4.16",
-    "password-generator": "^2.3.2"
+    "password-generator": "^2.3.2",
+    "superagent": "^6.1.0"
   },
   "scripts": {
     "start": "node index.js",

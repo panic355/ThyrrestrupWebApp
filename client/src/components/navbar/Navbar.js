@@ -55,7 +55,7 @@ class BootstrapNavbar extends React.Component {
                       <Nav.Link eventKey="logout">Log ud</Nav.Link>
                     )}
                     {!this.state.LoggedIn && (
-                      <Nav.Link href="/login" eventKey="login">
+                      <Nav.Link href="/login">
                         Log ind
                       </Nav.Link>
                     )}
