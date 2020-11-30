@@ -26,11 +26,9 @@ router.get('/createMachine', (req, res) => {
 router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleController.editMachineLoad, (req, res, next) => {
     res.send('editMachine')
 });
-
 router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
     res.send('service')
 });
-
 router.post('/updateMachine', (req, res) => {
     let updateUrl = 'https://functionupdatethyrrestrup.azurewebsites.net/api/UpdateFunction?code=8FgyN/s9h3iN4oBT6N26Xnz7MJHGw5nbnc3mTKHBIFQt2h3SnkLbJg==';
     var responseBack = res;
@@ -45,7 +43,6 @@ router.post('/updateMachine', (req, res) => {
         }
     })
 });
-
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
     console.log('found path');
@@ -54,7 +51,6 @@ router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
       res.send(response.data);
     });
 });
-
 // The router for vehicle is defined, now it can be used to get information to the page
 router.get('/vehicle/:vehicleID', authController.isUserOrOwner, vehicleListingController.vehicle, (req, res, next) => {
     res.send('vehicle')

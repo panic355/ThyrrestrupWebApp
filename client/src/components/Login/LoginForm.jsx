@@ -2,7 +2,6 @@
 import React from "react";
 var CreateReactClass = require('create-react-class');
 
-
 var loginForm = CreateReactClass({
     render: function() {
       return (
@@ -11,7 +10,6 @@ var loginForm = CreateReactClass({
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous" />
           <link rel="stylesheet" href="/style.css" />
-          
           <title>Document</title>
           <div className="container mt-4">
             <div className="card">

@@ -6,6 +6,7 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { CookiesProvider } from "react-cookie";
 
+
 ReactDOM.render(
 <CookiesProvider> 
     <App />

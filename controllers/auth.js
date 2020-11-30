@@ -36,6 +36,13 @@ let transporter = nodemailer.createTransport({
 
 
 exports.login = async (req, res) => {
+console.log(req.cookies.jdc_consent)
+    if (req.cookies.jdc_consent == null) {
+        res.send('Please accept the cookies on this site in order to be able to login')
+        return;
+    }
+
+    else {
     try {
 
 
@@ -81,6 +88,8 @@ exports.login = async (req, res) => {
         console.log(error);
     }
 }
+}
+
 
 exports.register = async (req, res) => {
     var request = new mssql.Request();
