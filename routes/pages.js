@@ -11,6 +11,7 @@ const cookieParser = require('cookie-parser')
 const axios = require('axios');
 const { request } = require('express');
 const router = express.Router();
+router.use(express.json());
 
 
 // Here we get and render home page
@@ -33,13 +34,13 @@ router.post('/updateMachine', (req, res) => {
     let updateUrl = 'https://functionupdatethyrrestrup.azurewebsites.net/api/UpdateFunction?code=8FgyN/s9h3iN4oBT6N26Xnz7MJHGw5nbnc3mTKHBIFQt2h3SnkLbJg==';
     var responseBack = res;
     console.log(req.body);
-    sa.post(updateUrl).set('Content-Type', 'application/json').send({command: 'update'}).end(function(err, res){
-        console.log('client: ' + res.clientError + ' server: ' + res.serverError);
-
-        if (res.clientError == 1 || res.serverError == 1) {
-            responseBack.status(500).json({'confirm':'Something went wrong'});
+    sa.post(updateUrl).set('Content-Type', 'application/json').send(req.body).end(function(err, res){
+        if (res.status == 200) {
+            responseBack.status(res.status).json({'confirm':'Message Received'});
+        } else if(res.status == 408) {
+            responseBack.status(res.status).json({'confirm':'Timeout'});
         } else {
-            responseBack.json({'confirm':'Message Received'});
+            responseBack.status(res.status).json({'confirm':'Something went wrong'});
         }
     })
 });
