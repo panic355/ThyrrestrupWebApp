@@ -18,6 +18,7 @@ export default class fetchVechicleList extends React.Component {
   }
 
   async handleUpdate() {
+    this.setState({updateLoading: true});
     var requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -26,8 +27,9 @@ export default class fetchVechicleList extends React.Component {
 
     fetch("/updateMachine", requestOptions)
       .then((res) => res.json())
-      .then((updateResponse) =>
-        this.setState({})
+      .then((updateResponse) =>{
+        this.setState({updateLoading: false});
+        console.log(updateResponse.body);}
       );
   }
 
@@ -107,6 +109,8 @@ export default class fetchVechicleList extends React.Component {
                     }
                   />
                   <input
+                    id = {vehicle.personID}
+                    disabled ={this.state.updateLoading}
                     type="submit"
                     value="Opdater maskine"
                     className="btn btn-primary mr-1"
