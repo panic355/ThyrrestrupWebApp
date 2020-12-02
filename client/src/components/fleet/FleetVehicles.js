@@ -2,7 +2,6 @@ import React from "react";
 import Report from "../powerbi/chart";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Button, Row, Spinner } from "react-bootstrap";
-import "../../styles/LoadingAnimation.css";
 
 export default class fetchVechicleList extends React.Component {
   state = {
