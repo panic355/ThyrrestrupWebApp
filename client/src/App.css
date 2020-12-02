@@ -30,3 +30,15 @@ h1 {
   background-color: #FFEFA9;
 }
 
+#consent-popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 8rem;
+  background-color: rgb(179, 179, 179);
+  transition: opacity 1s ease;
+}
+#consent-popup.hidden {
+  opacity: 0;
+}

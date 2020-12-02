@@ -38,8 +38,7 @@ let transporter = nodemailer.createTransport({
 exports.login = async (req, res) => {
 console.log(req.cookies.jdc_consent)
     if (req.cookies.jdc_consent == null) {
-        res.send('Please accept the cookies on this site in order to be able to login')
-        return;
+        res.status(422).json('Please accept the cookies on this site in order to be able to login')
     }
 
     else {
@@ -95,7 +94,7 @@ exports.register = async (req, res) => {
     var request = new mssql.Request();
     console.log(req.body);
 
-    const { name, email, password, passwordConfirm, admin } = req.body; // here the input from the user is retrieved from the body of the html
+    const { name, email, confirmEmail, password, passwordConfirm, admin } = req.body; // here the input from the user is retrieved from the body of the html
 
     // this query will check if a user is registered under that email
     request.query("SELECT email FROM Persons WHERE email = ('" + email + "')", async (error, results) => {
@@ -108,12 +107,20 @@ exports.register = async (req, res) => {
             return res.send('register', {
                 message: 'That email is already in use' // message is sent to html where it will handle it and show it
             })
+        } 
+
+        if (email !== confirmEmail) {
+            return res.send('register', {
+                message: 'Email allready exists' // message is sent to html where it will handle it and show it
+            });
+
             // here the password and confirmPassword is checked if they match
-        } else if (password !== passwordConfirm) {
+        } if (password !== passwordConfirm) {
             return res.send('register', {
                 message: 'Passwords do not match' // message is sent to html where it will handle it and show it
             });
         }
+
 
         // The password is hashed 8 times
         let hashedPassword = await bcrypt.hash(password, 8);

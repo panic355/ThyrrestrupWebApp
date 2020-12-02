@@ -2518,6 +2518,11 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+combo-storage@^2.0.3:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/combo-storage/-/combo-storage-2.0.4.tgz#05ff22127a6f34eed512c3c67e0bc01aa59df5e7"
+  integrity sha512-pyk7ypRAC7TW/oLp0lXwdQ9E9iWTvpVegZgh/2OQ1UsQJzM9fwxct+RSUT6Ekr83fC5Zp90+XcOKbMuH+CYckw==
+
 commander@2.9.x, commander@~2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.9.0.tgz#9c99094176e12240cb22d6c5146098400fe0f7d4"
@@ -2700,6 +2705,11 @@ cookie@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.4.1.tgz#afd713fe26ebd21ba95ceb61f9a8116e50a537d1"
   integrity sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==
+
+cookieconsent@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/cookieconsent/-/cookieconsent-3.1.1.tgz#f90bfadcaeef7d2bdcdd8278257f7264cb5d6819"
+  integrity sha512-v8JWLJcI7Zs9NWrs8hiVldVtm3EBF70TJI231vxn6YToBGj0c9dvdnYwltydkAnrbBMOM/qX1xLFrnTfm5wTag==
 
 copy-descriptor@^0.1.0:
   version "0.1.1"
@@ -7878,6 +7888,19 @@ react-addons-clone-with-props@^0.14.8:
   resolved "https://registry.yarnpkg.com/react-addons-clone-with-props/-/react-addons-clone-with-props-0.14.8.tgz#3d481b9a9d146cf2671562e3627ad7e4c0f6b2e2"
   integrity sha1-PUgbmp0UbPJnFWLjYnrX5MD2suI=
 
+react-alert-template-basic@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-alert-template-basic/-/react-alert-template-basic-1.0.0.tgz#89bcf35095faf5ebdd25e1e7c300e6b4234b5ba1"
+  integrity sha512-6x5Us0oc+jj8BDNkvSWfQMESk5SdyGKitXdLb7CwIlIlecyATjCTKSWpLABg8tpKAPOSJu4Dv/fYUqxXEio/XA==
+
+react-alert@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-alert/-/react-alert-7.0.2.tgz#277b448c43a037a3ff5c82086e16867cadf98d05"
+  integrity sha512-oUxPk9DMaEm93Y33mdAmy4vDPZauMj30di4p4+QuZ3JOyoFSFteLSsjlhTkDjkyvJuVxToi3bbnsxehRHEPpeg==
+  dependencies:
+    prop-types "^15.7.2"
+    react-transition-group "^4.4.1"
+
 react-bootstrap@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-1.4.0.tgz#806a8b48b065cedfb28c6c5c7b0c0e3c3b53445d"
@@ -7911,6 +7934,14 @@ react-cookie-banner@^4.1.0:
     lodash.omit "^4.5.0"
     react-addons-clone-with-props "^0.14.8"
     react-cookie "^2.1.2"
+
+react-cookie-consent-notification@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/react-cookie-consent-notification/-/react-cookie-consent-notification-1.1.1.tgz#59d36bc46b7c9818369ebcee35bd86972641b37f"
+  integrity sha512-TpEsXExyNtpoD6LW7h+Lqt9EiGQ4JmMEcwuCxFH66MvpPa89GuNA2Rlrn2i/7ipnY7qzPEgPpSqrzBjGnbybSQ==
+  dependencies:
+    combo-storage "^2.0.3"
+    prop-types "^15.7.2"
 
 react-cookie-consent@^6.1.0:
   version "6.1.0"

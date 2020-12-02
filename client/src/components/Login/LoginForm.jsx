@@ -1,6 +1,8 @@
-
 import React from "react";
+import CookiePermision from "../CookiePermision"
 var CreateReactClass = require('create-react-class');
+
+
 
 var loginForm = CreateReactClass({
     render: function() {
@@ -26,7 +28,11 @@ var loginForm = CreateReactClass({
                     <label htmlFor="password">Password</label>
                     <input type="password" className="form-control" id="password" name="password" />
                   </div>
+                  <div className="form-group">
+                    <label htmlFor="Consent text">text</label>
+                  </div>
                   <button type="submit" className="btn btn-primary">Login</button>
+                
                 </form>
               </div>
             </div>
@@ -34,7 +40,7 @@ var loginForm = CreateReactClass({
         </div>
       );
     }
+    
   });
-
   
 export default loginForm;
