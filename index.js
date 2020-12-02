@@ -57,4 +57,6 @@ var time = app.listen(port);
 
 time.timeout = 300000;
 
+time.headersTimeout = 120000;
+
 console.log(`Server listening on ${port}`);
