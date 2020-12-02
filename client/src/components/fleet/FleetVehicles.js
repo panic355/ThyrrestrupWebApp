@@ -9,6 +9,7 @@ export default class fetchVechicleList extends React.Component {
     vehicleList: [],
     updateLoading: false,
     response: "",
+    error: "",
   };
   async componentDidMount() {
     fetch("/fleet")
@@ -25,12 +26,17 @@ export default class fetchVechicleList extends React.Component {
       body: JSON.stringify({ command: "update" }),
     };
 
-    fetch("/updateMachine", requestOptions)
-      .then((res) => res.json())
-      .then((updateResponse) => {
-        console.log(updateResponse.message);
-        this.setState({ updateLoading: false,response:updateResponse.message});
-      });
+    let response = await fetch("/updateMachine", requestOptions);
+    if (response.status == 200) {
+      this.setState({ error: "green" });
+    } else {
+      this.setState({ error: "red" });
+    }
+    let obj = await response.json();
+    this.setState({
+      updateLoading: false,
+      response: obj.message,
+    });
   }
 
   render() {
@@ -74,31 +80,38 @@ export default class fetchVechicleList extends React.Component {
                     {vehicle.timeSinceMotService}
                   </p>
                   <p className="mb-1">Person nummer: {vehicle.personID}</p>
-                  <div className={Row}>
-
-                  <Button
+                  <Row>
+                    <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
                       href={`/vehicle/${vehicle.vehicleID}`}
-                    >Gå til maskine</Button>
+                    >
+                      Gå til maskine
+                    </Button>
 
                     <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
                       href={`/editMachine/${vehicle.vehicleID}`}
-                    >Rediger maskine</Button>
+                    >
+                      Rediger maskine
+                    </Button>
 
                     <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
                       href={`/deleteMachine/${vehicle.vehicleID}`}
-                    >Slet Maskine</Button>
+                    >
+                      Slet Maskine
+                    </Button>
 
                     <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
                       href={`/service/${vehicle.vehicleID}`}
-                    >Servicer maskine</Button>
+                    >
+                      Servicer maskine
+                    </Button>
 
                     <Button
                       variant="btn btn-primary mr-1"
@@ -106,7 +119,7 @@ export default class fetchVechicleList extends React.Component {
                       type="submit"
                       onClick={() => this.handleUpdate()}
                     >
-                    Opdater maskine&nbsp;
+                      Opdater maskine&nbsp;
                       {this.state.updateLoading && (
                         <Spinner
                           as="span"
@@ -117,8 +130,10 @@ export default class fetchVechicleList extends React.Component {
                         />
                       )}
                     </Button>
-                    <p class="mr-1">{this.state.response}</p> 
-                  </div>
+                    <p style={{ color: this.state.error }}>
+                      {this.state.response}
+                    </p>
+                  </Row>
                 </div>
               </a>
             </div>
