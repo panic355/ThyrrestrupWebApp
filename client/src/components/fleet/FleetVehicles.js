@@ -75,40 +75,31 @@ export default class fetchVechicleList extends React.Component {
                   </p>
                   <p className="mb-1">Person nummer: {vehicle.personID}</p>
                   <div className={Row}>
-                    <input
+
+                  <Button
+                      variant="btn btn-primary mr-1"
                       type="submit"
-                      value="Gå til maskine"
-                      className="btn btn-primary mr-1"
-                      onClick={() =>
-                        (window.location.href = "/vehicle/" + vehicle.vehicleID)
-                      }
-                    />
-                    <input
+                      href={`/vehicle/${vehicle.vehicleID}`}
+                    >Gå til maskine</Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
                       type="submit"
-                      value="Rediger maskine"
-                      className="btn btn-primary mr-1"
-                      onClick={() =>
-                        (window.location.href =
-                          "/editMachine/" + vehicle.vehicleID)
-                      }
-                    />
-                    <input
+                      href={`/editMachine/${vehicle.vehicleID}`}
+                    >Rediger maskine</Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
                       type="submit"
-                      value="Slet Maskine"
-                      className="btn btn-primary mr-1"
-                      onClick={() =>
-                        (window.location.href =
-                          "/deleteMachine/" + vehicle.vehicleID)
-                      }
-                    />
-                    <input
+                      href={`/deleteMachine/${vehicle.vehicleID}`}
+                    >Slet Maskine</Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
                       type="submit"
-                      value="Servicer maskine"
-                      className="btn btn-primary mr-1"
-                      onClick={() =>
-                        (window.location.href = "/service/" + vehicle.vehicleID)
-                      }
-                    />
+                      href={`/service/${vehicle.vehicleID}`}
+                    >Servicer maskine</Button>
+
                     <Button
                       variant="btn btn-primary mr-1"
                       disabled={this.state.updateLoading}
