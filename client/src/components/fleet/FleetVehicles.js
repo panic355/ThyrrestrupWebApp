@@ -8,7 +8,7 @@ export default class fetchVechicleList extends React.Component {
     loading: true,
     vehicleList: [],
     updateLoading: false,
-    updateResponse: "",
+    response: "",
   };
   async componentDidMount() {
     fetch("/fleet")
@@ -28,8 +28,8 @@ export default class fetchVechicleList extends React.Component {
     fetch("/updateMachine", requestOptions)
       .then((res) => res.json())
       .then((updateResponse) => {
-        this.setState({ updateLoading: false });
-        console.log(updateResponse.body);
+        console.log(updateResponse.message);
+        this.setState({ updateLoading: false,response:updateResponse.message});
       });
   }
 
@@ -126,6 +126,7 @@ export default class fetchVechicleList extends React.Component {
                         />
                       )}
                     </Button>
+                    <p class="mr-1">{this.state.response}</p> 
                   </div>
                 </div>
               </a>

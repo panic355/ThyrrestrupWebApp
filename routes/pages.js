@@ -36,11 +36,11 @@ router.post('/updateMachine', (req, res) => {
     console.log(req.body);
     sa.post(updateUrl).set('Content-Type', 'application/json').send(req.body).end(function(err, res){
         if (res.status == 200) {
-            responseBack.status(res.status).json({'confirm':'Message Received'});
+            responseBack.status(res.status).json({'message':'Besked modtaget!'});
         } else if(res.status == 408) {
-            responseBack.status(res.status).json({'confirm':'Timeout'});
+            responseBack.status(res.status).json({'message':'Timeout'});
         } else {
-            responseBack.status(res.status).json({'confirm':'Something went wrong'});
+            responseBack.status(res.status).json({'message':'Noget gik galt!'});
         }
     })
 });
