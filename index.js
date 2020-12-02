@@ -53,10 +53,6 @@ app.get('*', (req, res) => {
 });
 
 
-var time = app.listen(port);
-
-time.timeout = 300000;
-
-time.headersTimeout = 120000;
+app.listen(port);
 
 console.log(`Server listening on ${port}`);
