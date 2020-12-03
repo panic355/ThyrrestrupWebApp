@@ -20,7 +20,7 @@ const cookieStorage = {
 const storageType = cookieStorage;
 const consentPropertyName = 'jdc_consent';
 const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
-const saveToStorage = () => storageType.setItem(consentPropertyName, true, 182);
+const saveToStorage = () => storageType.setItem(consentPropertyName, true, 1000);
 
 window.onload = () => {
 
