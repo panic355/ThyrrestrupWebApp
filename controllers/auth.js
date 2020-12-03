@@ -38,7 +38,11 @@ let transporter = nodemailer.createTransport({
 exports.login = async (req, res) => {
 console.log(req.cookies.jdc_consent)
     if (req.cookies.jdc_consent == null) {
-        res.status(422).json('Please accept the cookies on this site in order to be able to login')
+        var PleaseAcceptCookie = {
+            'Messege': "Please accept the cookies on this site in order to be able to login"
+        }
+        res.status(404)
+        //res.status(404).json(PleaseAcceptCookie)
     }
 
     else {

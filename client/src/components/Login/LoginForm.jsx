@@ -3,9 +3,14 @@ import CookiePermision from "../CookiePermision"
 var CreateReactClass = require('create-react-class');
 
 
+console.log("cookies is: "+ document.cookie)
+    if (!document.cookie) {
+        console.log("success")
+      var ErrorMessage = "Please accept the cookies on this site in order to be able to login";
+      }
 
-var loginForm = CreateReactClass({
-    render: function() {
+export default class loginForm extends React.Component{
+    render() {
       return (
         <div>
           <meta charSet="UTF-8" />
@@ -29,10 +34,9 @@ var loginForm = CreateReactClass({
                     <input type="password" className="form-control" id="password" name="password" />
                   </div>
                   <div className="form-group">
-                    <label htmlFor="Consent text">text</label>
+      <label style={{ color: 'red' }}>{ErrorMessage}</label>
                   </div>
                   <button type="submit" className="btn btn-primary">Login</button>
-                
                 </form>
               </div>
             </div>
@@ -40,7 +44,5 @@ var loginForm = CreateReactClass({
         </div>
       );
     }
-    
-  });
+  };
   
-export default loginForm;

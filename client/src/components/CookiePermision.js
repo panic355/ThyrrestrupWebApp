@@ -6,15 +6,21 @@ const cookieStorage = {
             .reduce((acc, [key, value]) => ({ ...acc, [key.trim()]: value }), {});
         return cookies[item];
     },
-    setItem: (item, value) => {
-        document.cookie = `${item}=${value};`
+    setItem: (item, value, days) => {
+        var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+        document.cookie = `${item}=${value};` + expires + "; path=/";
     }
 }
 
 const storageType = cookieStorage;
 const consentPropertyName = 'jdc_consent';
 const shouldShowPopup = () => !storageType.getItem(consentPropertyName);
-const saveToStorage = () => storageType.setItem(consentPropertyName, true);
+const saveToStorage = () => storageType.setItem(consentPropertyName, true, 182);
 
 window.onload = () => {
 
