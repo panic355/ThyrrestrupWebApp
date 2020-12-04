@@ -142,7 +142,7 @@ exports.register = async (req, res) => {
                     from: 'projektminkthyrrestrup@gmail.com',
                     to: email,
                     subject: 'Vehicle purchase at ThyrrestrupProjektMink',
-                    text: 'That was easy!'
+                    text: "Du er nu blevet oprettet i systemet som bruger, dine oplysninger er: Email"+email+"     Password: "+password+'That was easy!'
                   };
                   
                   transporter.sendMail(mailOptions, function(error, info){
