@@ -17,6 +17,8 @@ const { readSync } = require('fs');
 
 const app = express();
 
+app.use(express.json())
+
 var config = {
   server: process.env.DATABASE_HOST,
   database: process.env.DATABASE,

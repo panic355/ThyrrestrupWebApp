@@ -1,14 +1,15 @@
 import React from "react";
 import Report from "../powerbi/chart";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Row, Spinner } from "react-bootstrap";
 
 export default class fetchVechicleList extends React.Component {
   state = {
     loading: true,
     vehicleList: [],
     updateLoading: false,
-    updateResponse: "",
+    response: "",
+    error: "",
   };
   async componentDidMount() {
     fetch("/fleet")
@@ -18,17 +19,24 @@ export default class fetchVechicleList extends React.Component {
   }
 
   async handleUpdate() {
+    this.setState({ updateLoading: true });
     var requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ command: "update" }),
     };
 
-    fetch("/updateMachine", requestOptions)
-      .then((res) => res.json())
-      .then((updateResponse) =>
-        this.setState({})
-      );
+    let response = await fetch("/updateMachine", requestOptions);
+    if (response.status == 200) {
+      this.setState({ error: "green" });
+    } else {
+      this.setState({ error: "red" });
+    }
+    let obj = await response.json();
+    this.setState({
+      updateLoading: false,
+      response: obj.message,
+    });
   }
 
   render() {
@@ -72,46 +80,60 @@ export default class fetchVechicleList extends React.Component {
                     {vehicle.timeSinceMotService}
                   </p>
                   <p className="mb-1">Person nummer: {vehicle.personID}</p>
-                  <input
-                    type="submit"
-                    value="Gå til maskine"
-                    className="btn btn-primary mr-1"
-                    onClick={() =>
-                      (window.location.href = "/vehicle/" + vehicle.vehicleID)
-                    }
-                  />
-                  <input
-                    type="submit"
-                    value="Rediger maskine"
-                    className="btn btn-primary mr-1"
-                    onClick={() =>
-                      (window.location.href =
-                        "/editMachine/" + vehicle.vehicleID)
-                    }
-                  />
-                  <input
-                    type="submit"
-                    value="Slet Maskine"
-                    className="btn btn-primary mr-1"
-                    onClick={() =>
-                      (window.location.href =
-                        "/deleteMachine/" + vehicle.vehicleID)
-                    }
-                  />
-                  <input
-                    type="submit"
-                    value="Servicer maskine"
-                    className="btn btn-primary mr-1"
-                    onClick={() =>
-                      (window.location.href = "/service/" + vehicle.vehicleID)
-                    }
-                  />
-                  <input
-                    type="submit"
-                    value="Opdater maskine"
-                    className="btn btn-primary mr-1"
-                    onClick={() => this.handleUpdate()}
-                  />
+                  <Row>
+                    <Button
+                      variant="btn btn-primary mr-1"
+                      type="submit"
+                      href={`/vehicle/${vehicle.vehicleID}`}
+                    >
+                      Gå til maskine
+                    </Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
+                      type="submit"
+                      href={`/editMachine/${vehicle.vehicleID}`}
+                    >
+                      Rediger maskine
+                    </Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
+                      type="submit"
+                      href={`/deleteMachine/${vehicle.vehicleID}`}
+                    >
+                      Slet Maskine
+                    </Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
+                      type="submit"
+                      href={`/service/${vehicle.vehicleID}`}
+                    >
+                      Servicer maskine
+                    </Button>
+
+                    <Button
+                      variant="btn btn-primary mr-1"
+                      disabled={this.state.updateLoading}
+                      type="submit"
+                      onClick={() => this.handleUpdate()}
+                    >
+                      Opdater maskine&nbsp;
+                      {this.state.updateLoading && (
+                        <Spinner
+                          as="span"
+                          animation="grow"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </Button>
+                    <p style={{ color: this.state.error }}>
+                      {this.state.response}
+                    </p>
+                  </Row>
                 </div>
               </a>
             </div>
