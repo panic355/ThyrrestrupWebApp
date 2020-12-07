@@ -30,9 +30,9 @@ router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleControl
 router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
     res.send('service')
 });
-router.post('/updateMachine', vehicleController.updateMachine, (req, res) => {
-    res.send('updateMachine')
-});   
+router.post('/updateMachine', vehicleController.updateMachine)
+
+
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
     console.log('found path');

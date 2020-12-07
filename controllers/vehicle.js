@@ -2,7 +2,7 @@ const mssql = require("mssql");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
-
+const sa = require('superagent');
 var request = new mssql.Request();
 
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
