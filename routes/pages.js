@@ -30,20 +30,9 @@ router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleControl
 router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
     res.send('service')
 });
-router.post('/updateMachine', (req, res) => {
-    let updateUrl = 'https://functionupdatethyrrestrup.azurewebsites.net/api/UpdateFunction?code=8FgyN/s9h3iN4oBT6N26Xnz7MJHGw5nbnc3mTKHBIFQt2h3SnkLbJg==';
-    var responseBack = res;
-    console.log(req.body);
-    sa.post(updateUrl).set('Content-Type', 'application/json').send(req.body).end(function(err, res){
-        if (res.status == 200) {
-            responseBack.status(res.status).json({'message':'Besked modtaget!'});
-        } else if(res.status == 408) {
-            responseBack.status(res.status).json({'message':'Timeout'});
-        } else {
-            responseBack.status(res.status).json({'message':'Noget gik galt!'});
-        }
-    })
-});
+router.post('/updateMachine', vehicleController.updateMachine, (req, res) => {
+    res.send('updateMachine')
+});   
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
     console.log('found path');
