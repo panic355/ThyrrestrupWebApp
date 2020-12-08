@@ -1,7 +1,7 @@
 import React from "react";
 import Report from "../powerbi/chart";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { Button, Row, Spinner } from "react-bootstrap";
+import { Button, Row, Spinner, Image } from "react-bootstrap";
 
 export default class fetchVechicleList extends React.Component {
   state = {
@@ -62,18 +62,7 @@ export default class fetchVechicleList extends React.Component {
                   <h5 class="machineNr">Maskine nummer: {vehicle.vehicleID}</h5>
                 </div>
                 <div>
-                  <img
-                    src="https://cdn.lfmedia.dk/CMSContent/Media/PageContent/Max/22784.jpg"
-                    className="card-img-top"
-                    style={{
-                      width: 175,
-                      height: 100,
-                      position: "left",
-                      top: this.props.top,
-                      left: this.props.left,
-                    }}
-                    alt="..."
-                  ></img>
+                  <Image src="https://cdn.lfmedia.dk/CMSContent/Media/PageContent/Max/22784.jpg" rounded width='175' height='100'/>
                   <p className="mb-1">Type: {vehicle.type}</p>
                   <p className="mb-1">
                     Timer siden sidste motor servicecheck:{" "}
