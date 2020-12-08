@@ -165,7 +165,9 @@ exports.updateMachine = async (req, res) => {
 let updateUrl = 'https://functionupdatethyrrestrup.azurewebsites.net/api/UpdateFunction?code=8FgyN/s9h3iN4oBT6N26Xnz7MJHGw5nbnc3mTKHBIFQt2h3SnkLbJg==';
 var responseBack = res;
 console.log(req.body);
+console.log(res.status);
 sa.post(updateUrl).set('Content-Type', 'application/json').send(req.body).end(function(err, res){
+    console.log(res.status);
     if (res.status == 200) {
         responseBack.status(res.status).json({'message':'Besked modtaget!'});
     } else if(res.status == 408) {
