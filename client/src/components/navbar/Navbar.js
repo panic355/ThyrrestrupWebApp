@@ -16,16 +16,20 @@ class BootstrapNavbar extends React.Component {
     super(props);
     this.state = {
       LoggedIn: false,
+      userType: "",
     };
   }
   async componentDidMount() {
     fetch("/auth/status")
       .then((res) => res.json())
       .then((data) => this.setState({ LoggedIn: data.active }));
+
+    fetch("/userType")
+      .then((res) => res.json())
+      .then((data) => this.setState({ userType: data.userType }));
+      console.log(this.state.userType);
   }
   render() {
-    console.log(this.state.LoggedIn);
-
     return (
       <div>
         <div className="row">
@@ -45,14 +49,14 @@ class BootstrapNavbar extends React.Component {
                           .then((res) => res.json())
                           .then((data) =>
                             this.setState({ LoggedIn: data.active })
-                          );
+                          ); 
                       }
                     }}
                   >
                     <Nav.Link href="/">Hjem</Nav.Link>
                     <Nav.Link href="/contact-us">Om os</Nav.Link>
                     {this.state.LoggedIn && (
-                      <Nav.Link eventKey="logout">Log ud</Nav.Link>
+                      <Nav.Link eventKey="logout" >Log ud</Nav.Link>
                     )}
                     {!this.state.LoggedIn && (
                       <Nav.Link href="/login">
@@ -69,6 +73,7 @@ class BootstrapNavbar extends React.Component {
                       <Nav.Link href="/createMachine">Lav maskine</Nav.Link>
                     )}
                   </Nav>
+                  <p className="mr-sm-2" style={{color: "gray", marginTop: "10px"}}>{this.state.userType}</p>
                   <Form inline>
                     <FormControl
                       type="text"
