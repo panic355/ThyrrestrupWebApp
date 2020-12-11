@@ -257,18 +257,18 @@ exports.authenticate = async (req, res, next) => {
     }*/
 
     exports.userType = async (req, res) => {
+
         const token = req.cookies.jwt
         var msg = '';
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log(decoded.admin)
-        
-        if (!decoded.admin) {
-            msg = "ikke autoriseret"
-            console.log("The user is : "+msg)
+
+        if (!req.cookies.jwt) {
+            msg = "Ikke logget ind"
             res.json({
                 userType: msg
             });
         }
+
         else if (decoded.admin == 'User') {
             msg = 'Bruger'
             console.log("Brugeren typen er : "+msg)
