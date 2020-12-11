@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
 
 const nodemailer = require('nodemailer'); // this is a library for sendding emails
+const { response } = require("express");
 
 
 var request = new mssql.Request();
@@ -36,6 +37,8 @@ let transporter = nodemailer.createTransport({
 
 
 exports.login = async (req, res) => {
+             // wrap in timeout to simulate server api call
+
 console.log(req.cookies.jdc_consent)
     if (req.cookies.jdc_consent == null) {
         var PleaseAcceptCookie = {
@@ -44,14 +47,24 @@ console.log(req.cookies.jdc_consent)
         res.status(404)
         //res.status(404).json(PleaseAcceptCookie)
     }
+    
 
     else {
     try {
 
 
         const { email, password } = req.body;
+        console.log("This is the body: "+email, password )
         if (!email || !password) {
-            return res.status(400).send('login')
+            const data = req.body;
+            const error = 'bad Credentialsse'
+            console.log('wrong credentialss')
+            res.json({
+                status: 401,
+                email: data.email,
+                password: data.password,
+                error
+            });
         }
 
         // This query is for login and will check if the email exists in a user
@@ -59,8 +72,17 @@ console.log(req.cookies.jdc_consent)
 
             // here we have error handling for the query
             if (!results.recordset[0] || !(await bcrypt.compare(password, (results.recordset[0].password)))) {
-                res.sendStatus(401)
+                const data = req.body;
+                const error = 'bad Credentials'
+                console.log('wrong credentials')
+                res.json({
+                    status: 401,
+                    email: data.email,
+                    password: data.password,
+                    error: error
 
+                });
+                return;
                 // if there's no error and both password and email is correct it will go in this else statement
             } else {
                 var id = results.recordset[0].personID;
@@ -83,16 +105,24 @@ console.log(req.cookies.jdc_consent)
                     ),
                     httpOnly: true
                 }
+                console.log('bongo');
+
+                const data = req.body;
+                console.log('bout to send response.json');
                 res.cookie('jwt', token, cookieOptions);
-                res.status(200).redirect("/");
+                res.json({
+                    status: 200,
+                    email: data.email,
+                    password: data.password
+                });
             }
+            return;
         });
     } catch (error) {
         console.log(error);
-    }
+    };
 }
 }
-
 
 exports.register = async (req, res) => {
     var request = new mssql.Request();
