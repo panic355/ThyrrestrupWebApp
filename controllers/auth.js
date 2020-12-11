@@ -193,6 +193,7 @@ exports.register = async (req, res) => {
     });
 }
 
+
 exports.service = async (req, res) => {
     //var vehicleID = req.params.vehicleID
     var { brokenPart1, brokenPart2, brokenPart3, vehicleID } = req.body;
@@ -255,15 +256,31 @@ exports.authenticate = async (req, res, next) => {
        })
     }*/
 
-    exports.isUserOwner = async (req, res, next) => {
-        console.log(req.header)
+    exports.userType = async (req, res) => {
         const token = req.cookies.jwt
+        var msg = '';
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        if (decoded.admin == 'Owner') {
-        next();
-        } else {
-            return next(err);
+        console.log(decoded.admin)
+        
+        if (!decoded.admin) {
+            msg = "Unauthorized"
+            console.log("The user is : "+msg)
         }
+        else if (decoded.admin == 'User') {
+            msg = 'User'
+            console.log("The user is : "+msg)
+        }
+        else if (decoded.admin == 'Owner') {
+            msg = 'Owner'
+            console.log("The user is : "+msg)
+        }
+        else {
+           msg ='something went wrong '
+           console.log("error for, if user is invalid in a way the program isnt ready for : "+msg)
+        }
+                res.json({
+                    userType: msg
+                });
     };
 
     exports.isUserUser = async (req, res, next) => {

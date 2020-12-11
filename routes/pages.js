@@ -18,20 +18,21 @@ router.use(express.json());
 router.get('/', (req, res) => {
     res.send('index');
 });
-router.get('/deleteMachine/:vehicleID', authController.isUserOwner, vehicleController.deleteMachine, (req, res, next) => {
+router.get('/deleteMachine/:vehicleID', vehicleController.deleteMachine, (req, res, next) => {
     res.send('deleteMachine')
 });
 router.get('/createMachine', (req, res) => {
     res.send('createMachine');
 });
-router.get('/editMachine/:vehicleID', authController.isUserOwner, vehicleController.editMachineLoad, (req, res, next) => {
+router.get('/editMachine/:vehicleID', vehicleController.editMachineLoad, (req, res, next) => {
     res.send('editMachine')
 });
-router.get('/service/:vehicleID', authController.isUserOwner, serviceController.serviceLoad, (req, res, next) => {
+router.get('/service/:vehicleID', serviceController.serviceLoad, (req, res, next) => {
     res.send('service')
 });
 router.post('/updateMachine', vehicleController.updateMachine)
 
+router.get('/userType', authController.userType);
 
 // fleet is rendered
 router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
