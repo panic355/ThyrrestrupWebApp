@@ -261,11 +261,12 @@ exports.authenticate = async (req, res, next) => {
         const token = req.cookies.jwt
         var msg = '';
 
-        if (!req.cookies.jwt) {
+        if (!(req.cookies.jwt)) {
             msg = "Ikke logget ind"
             res.json({
                 userType: msg
             });
+            return;
         }
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
@@ -286,8 +287,9 @@ exports.authenticate = async (req, res, next) => {
         else {
            msg ='Hov, noget gik galt '
            console.log("error user not: "+msg)
-           return msg;
+           return;
         }
+        return;
     };
 
     exports.isUserUser = async (req, res, next) => {
