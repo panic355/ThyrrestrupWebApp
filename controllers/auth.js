@@ -263,24 +263,31 @@ exports.authenticate = async (req, res, next) => {
         console.log(decoded.admin)
         
         if (!decoded.admin) {
-            msg = "Unauthorized"
+            msg = "ikke autoriseret"
             console.log("The user is : "+msg)
+            res.json({
+                userType: msg
+            });
         }
         else if (decoded.admin == 'User') {
-            msg = 'User'
-            console.log("The user is : "+msg)
+            msg = 'Bruger'
+            console.log("Brugeren typen er : "+msg)
+            res.json({
+                userType: msg
+            });
         }
         else if (decoded.admin == 'Owner') {
-            msg = 'Owner'
-            console.log("The user is : "+msg)
+            msg = 'Administrator'
+            console.log("Brugeren typen er : "+msg)
+            res.json({
+                userType: msg
+            });
         }
         else {
-           msg ='something went wrong '
-           console.log("error for, if user is invalid in a way the program isnt ready for : "+msg)
+           msg ='Hov, noget gik galt '
+           console.log("error user not: "+msg)
+           return msg;
         }
-                res.json({
-                    userType: msg
-                });
     };
 
     exports.isUserUser = async (req, res, next) => {

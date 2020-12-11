@@ -35,7 +35,7 @@ router.post('/updateMachine', vehicleController.updateMachine)
 router.get('/userType', authController.userType);
 
 // fleet is rendered
-router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
+router.get('/fleet', authController.userType, vehicleListingController.fleet, (req, res, next) => {
     console.log('found path');
     axios.get('fleet')
     .then(response => {
