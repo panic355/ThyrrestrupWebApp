@@ -119,7 +119,7 @@ export default class fetchVechicleList extends React.Component {
                         />
                       )}
                     </Button>
-                    <p style={{ color: this.state.error }}>
+                    <p style={{ color: this.state.error, marginLeft: "10px" }}>
                       {this.state.response}
                     </p>
                   </Row>
