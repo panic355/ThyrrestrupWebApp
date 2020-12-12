@@ -1,5 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
 import Home from "../homePage/HomeJumbotron";
 import Register from "../register/RegisterForm";
@@ -10,6 +16,8 @@ import Login from "../Login/LoginForm";
 import FleetVehicles from "../fleet/FleetVehicles";
 import logo from "./logoWhite.svg";
 import Cookies from "js-cookie";
+import Vehicle from "../fleet/Vehicle"
+
 
 class BootstrapNavbar extends React.Component {
   constructor(props) {
@@ -19,6 +27,7 @@ class BootstrapNavbar extends React.Component {
       userType: "",
     };
   }
+
   async componentDidMount() {
     fetch("/auth/status")
       .then((res) => res.json())
@@ -27,7 +36,7 @@ class BootstrapNavbar extends React.Component {
     fetch("/userType")
       .then((res) => res.json())
       .then((data) => this.setState({ userType: data.userType }));
-      console.log(this.state.userType);
+    console.log(this.state.userType);
   }
   render() {
     return (
@@ -47,21 +56,17 @@ class BootstrapNavbar extends React.Component {
                       if (selectedKey == "logout") {
                         fetch("/auth/logout")
                           .then((res) => res.json())
-                          .then((data) =>
-                            this.setState({ LoggedIn: data.active })
-                          ); 
+                          .then((data) => this.setState({ LoggedIn: false }));
                       }
                     }}
                   >
                     <Nav.Link href="/">Hjem</Nav.Link>
                     <Nav.Link href="/contact-us">Om os</Nav.Link>
                     {this.state.LoggedIn && (
-                      <Nav.Link eventKey="logout" >Log ud</Nav.Link>
+                      <Nav.Link eventKey="logout">Log ud</Nav.Link>
                     )}
                     {!this.state.LoggedIn && (
-                      <Nav.Link href="/login">
-                        Log ind
-                      </Nav.Link>
+                      <Nav.Link href="/login">Log ind</Nav.Link>
                     )}
                     {this.state.LoggedIn && (
                       <Nav.Link href="/register">Register</Nav.Link>
@@ -73,7 +78,12 @@ class BootstrapNavbar extends React.Component {
                       <Nav.Link href="/createMachine">Lav maskine</Nav.Link>
                     )}
                   </Nav>
-                  <p className="mr-sm-2" style={{color: "gray", marginTop: "10px"}}>{this.state.userType}</p>
+                  <p
+                    className="mr-sm-2"
+                    style={{ color: "gray", marginTop: "10px" }}
+                  >
+                    {this.state.userType}
+                  </p>
                   <Form inline>
                     <FormControl
                       type="text"
@@ -112,6 +122,10 @@ class BootstrapNavbar extends React.Component {
 
                 <Route exact path="/createMachine">
                   <CreateMachine />
+                </Route>
+
+                <Route exact path="/Vehicle/">
+                  <Vehicle />
                 </Route>
               </Switch>
             </Router>

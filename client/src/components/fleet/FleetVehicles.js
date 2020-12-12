@@ -73,7 +73,7 @@ export default class fetchVechicleList extends React.Component {
                     <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
-                      href={`/vehicle/${vehicle.vehicleID}`}
+                      href={`/vehicle`}
                     >
                       Gå til maskine
                     </Button>
