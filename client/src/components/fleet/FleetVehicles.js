@@ -48,7 +48,7 @@ export default class fetchVechicleList extends React.Component {
     }
     return (
       <div>
-        <a className="list-group-item list-group-item-action active">
+        <a className="list-group-item list-group-item-action active" style={{top:"-24px"}}>
           <div class="d-flex w-100 justify-content-between">
             <h5 class="headline">Din flåde</h5>
           </div>
@@ -57,7 +57,7 @@ export default class fetchVechicleList extends React.Component {
         {this.state.vehicleList.map((vehicle) => (
           <div className="content">
             <div key={vehicle.vehicleID}>
-              <a className="list-group-item list-group-item-action">
+              <a className="list-group-item list-group-item-action" style={{}}>
                 <div class="d-flex w-100 justify-content-between">
                   <h5 class="machineNr">Maskine nummer: {vehicle.vehicleID}</h5>
                 </div>
