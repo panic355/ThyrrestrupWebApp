@@ -85,7 +85,7 @@ exports.deleteMachine = async (req, res) => {
     })
 
     // here we query email, name, hashedpassword and insert it into the database
-    request.query("delete from Vehicles where vehicleID =" + vehicleID, (error, results) => {
+    request.query(" update Vehicles SET personID =null where vehicleID ="+ vehicleID, async (error, results) => {
         if (error) {
             // logging if an error occurs
             console.log(error);
