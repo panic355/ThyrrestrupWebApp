@@ -26,7 +26,7 @@ exports.createMachine = async (req, res) => {
     const { type, vehicleID, powerBILink, personID, timeSinceMotService } = req.body; // here the input from the user is retrieved from the body of the html
       var timeToService;
     if (timeSinceMotService == '') {
-        timeToService = 1;
+        timeToService = 0;
         console.log('Works')
     }
     // this query will check if a Vehicle is registered under that ID
