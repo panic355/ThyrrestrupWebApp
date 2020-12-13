@@ -39,6 +39,11 @@ export default class fetchVechicleList extends React.Component {
     });
   }
 
+  async handleDelete(Id) {
+    let response = await fetch(`/deleteMachine/${Id}`);
+    console.log(response.body);
+  }
+
   render() {
     if (this.state.loading) {
       return <div>Loading...</div>;
@@ -48,7 +53,10 @@ export default class fetchVechicleList extends React.Component {
     }
     return (
       <div>
-        <a className="list-group-item list-group-item-action active" style={{top:"-24px"}}>
+        <a
+          className="list-group-item list-group-item-action active"
+          style={{ top: "-24px" }}
+        >
           <div class="d-flex w-100 justify-content-between">
             <h5 class="headline">Din flåde</h5>
           </div>
@@ -62,7 +70,12 @@ export default class fetchVechicleList extends React.Component {
                   <h5 class="machineNr">Maskine nummer: {vehicle.vehicleID}</h5>
                 </div>
                 <div>
-                  <Image src="https://cdn.lfmedia.dk/CMSContent/Media/PageContent/Max/22784.jpg" rounded width='175' height='100'/>
+                  <Image
+                    src="https://cdn.lfmedia.dk/CMSContent/Media/PageContent/Max/22784.jpg"
+                    rounded
+                    width="175"
+                    height="100"
+                  />
                   <p className="mb-1">Type: {vehicle.type}</p>
                   <p className="mb-1">
                     Timer siden sidste motor servicecheck:{" "}
@@ -89,7 +102,7 @@ export default class fetchVechicleList extends React.Component {
                     <Button
                       variant="btn btn-primary mr-1"
                       type="submit"
-                      href={`/deleteMachine/${vehicle.vehicleID}`}
+                      onClick={() => this.handleDelete(vehicle.vehicleID)}
                     >
                       Slet Maskine
                     </Button>
