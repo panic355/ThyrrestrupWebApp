@@ -42,12 +42,11 @@ exports.createMachine = async (req, res) => {
 
 
     // here we query email, name, hashedpassword and insert it into the database
-    request.query("INSERT INTO Vehicles (type, vehicleID, powerBILink, personID) VALUES ('" + type + "',+'" + vehicleID + "',+'" + powerBILink + "',+'" + personID + "')", (error, results) => {
+    request.query("INSERT INTO Vehicles (type, vehicleID, powerBILink, personID) VALUES ('" + type + "',+'" + vehicleID + "',+'" + powerBILink + "',+" + personID + ")", (error, results) => {
         if (error) {
             // logging if an error occurs
             console.log(error);
         } else {
-            console.log('slet' + timeSinceMotService)
             request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+timeSinceMotService+"', "+vehicleID+")", (error) => {
                 console.log(error)
             })
@@ -65,7 +64,7 @@ exports.createMachine = async (req, res) => {
 exports.deleteMachine = async (req, res) => {
     var vehicleID = req.params.vehicleID
     //const { vehicleID } = req.body; // here the input from the user is retrieved from the body of the html
-
+    console.log('test');
     // this query will check if a Vehicle is registered under that ID
     request.query("SELECT * FROM Vehicles where vehicleID =" + vehicleID, async (error, results) => {
         // error handling for the query
@@ -85,7 +84,7 @@ exports.deleteMachine = async (req, res) => {
     })
 
     // here we query email, name, hashedpassword and insert it into the database
-    request.query(" update Vehicles SET personID =null where vehicleID ="+ vehicleID, async (error, results) => {
+    request.query(" update Vehicles SET personID =null where vehicleID ="+ vehicleID, (error, results) => {
         if (error) {
             // logging if an error occurs
             console.log(error);
