@@ -24,9 +24,10 @@ mssql.connect(config, function (err) {
 exports.createMachine = async (req, res) => {
     console.log(req.body);
     const { type, vehicleID, powerBILink, personID, timeSinceMotService } = req.body; // here the input from the user is retrieved from the body of the html
-var theTimeToMotService = 0;
-    if (!timeSinceMotService){
-        theTimeToMotService  = 0;
+      var timeToService;
+    if (timeSinceMotService == '') {
+        timeToService = 1;
+        console.log('Works')
     }
     // this query will check if a Vehicle is registered under that ID
     request.query("SELECT * FROM Vehicles WHERE powerBILink = ('" + powerBILink + "')", async (error, results) => {
@@ -36,26 +37,39 @@ var theTimeToMotService = 0;
         }
         // if an ID is allready used
         if (results.recordset.length > 0) {
-            return res.status(200).redirect("/"); //res.redirect('createMachine', {
-                message: 'That PowerBI is already in use' // message is sent to html where it will handle it and show it
+            res.json({message: 'That PowerBI is already in use'}); //res.redirect('createMachine', {
+                 // message is sent to html where it will handle it and show it
             
-
+     return;
         }
-    });
+        else {
+    
+            request.query("SELECT * FROM Vehicles WHERE vehicleID = ('" + vehicleID + "')", async (error, results) => {
+                // error handling for the query
+                if (error) {
+                    console.log(error);
+                }
+                // if an ID is allready used
+                if (results.recordset.length > 0) {
+                    res.json({message: 'That vehicleID is allready in use'}); //res.redirect('createMachine', {
+                         // message is sent to html where it will handle it and show it
+             return;
+                }
+                else {
 
-
+console.log(timeToService)
     // here we query email, name, hashedpassword and insert it into the database
     request.query("INSERT INTO Vehicles (type, vehicleID, powerBILink, personID) VALUES ('" + type + "',+'" + vehicleID + "',+'" + powerBILink + "',+" + personID + ")", (error, results) => {
         if (error) {
             // logging if an error occurs
             console.log(error);
         } else {
-            request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+theTimeToMotService+"', "+vehicleID+")", (error) => {
+            request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+timeToService+"', "+vehicleID+")", (error) => {
                 if(error){
                 console.log(error)
                 }
             })
-            return res.json({
+            res.json({
                 success: true
             
                 // This messege will be sent to the html called register and then the html will show it to the user
@@ -63,6 +77,10 @@ var theTimeToMotService = 0;
             });
         }
     });
+}
+});
+}
+});
 }
 
 exports.deleteMachine = async (req, res) => {
