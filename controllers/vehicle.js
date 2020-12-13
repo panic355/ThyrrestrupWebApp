@@ -50,9 +50,8 @@ exports.createMachine = async (req, res) => {
             request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+timeSinceMotService+"', "+vehicleID+")", (error) => {
                 console.log(error)
             })
-            return res.status(200).json,({
-                success:true,
-                redirectUrl: '/'
+            return res.json({
+                success: true
             
                 // This messege will be sent to the html called register and then the html will show it to the user
               //  message: 'Vehicle Registered' // message is sent to html where it will handle it and show it
