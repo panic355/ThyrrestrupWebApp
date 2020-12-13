@@ -1,4 +1,5 @@
 import React from 'react';
+import { userService } from './user.service';
 
 console.log("cookies is: "+ document.cookie)
     if (!document.cookie) {
@@ -17,49 +18,15 @@ class Login extends React.Component {
             password: '',
             submitted: false,
             loading: false,
-            error: null
+            error: '',
+            bub: ''
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
-    async login(email, password) {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        };
-    
-        console.log('Got here #3')
         
-        const response = await fetch('/auth/login', requestOptions)
-        const json = await response.json().then(this.handleResponse);
-        /*
-        fetch('/auth/login', requestOptions).then(response => {
-            console.log("hellow"+response.status);
-        });
-        */
-    }
     
-    async handleResponse(response) {
-        //console.log('Got here #5'+res.status)
-            const error = response.error;
-            if (!(response.status === 200)) {
-                console.log('Got here #6: '+error)
-                if (response.status === 401) {
-                    console.log('Got here #7: '+error)
-                    // auto logout if 401 response returned from api
-                   // window.location.reload();
-                } 
-                console.log('Here is the error: '+error)
-            }
-            if (response.status === 200){
-            window.location.href = '/fleet'
-            console.log('Got here #8'+response.status)
-            }
-        }
-        
 
  handleChange(e) {
         const { name, value } = e.target;
@@ -76,10 +43,10 @@ handleSubmit(e) {
         if (!(email && password)) {
             return;
         }
-  console.log('Got here #2')
         this.setState({ loading: true });
-        this.login(email, password)
+        userService.login(email, password)
             .then(
+                error => console.log('error: '+ error),
                 error => this.setState({ error, loading: false })
             );
 
@@ -116,7 +83,7 @@ handleSubmit(e) {
                     </div>
                     <label style={{ color: 'red' }}>{ErrorMessage}</label>
                     {error &&
-                        <div className={'alert alert-danger'}>{error}</div>
+                    <label style={{ color: 'red' }}>{error}</label>
                     }
                 </form>
             </div>

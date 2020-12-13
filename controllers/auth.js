@@ -37,33 +37,13 @@ let transporter = nodemailer.createTransport({
 
 
 exports.login = async (req, res) => {
-             // wrap in timeout to simulate server api call
-
-console.log(req.cookies.jdc_consent)
-    if (req.cookies.jdc_consent == null) {
-        var PleaseAcceptCookie = {
-            'Messege': "Please accept the cookies on this site in order to be able to login"
-        }
-        res.status(404)
-        //res.status(404).json(PleaseAcceptCookie)
-    }
-    
-
-    else {
-    try {
-
-
         const { email, password } = req.body;
         console.log("This is the body: "+email, password )
-        if (!email || !password) {
-            const data = req.body;
-            const error = 'bad Credentialsse'
-            console.log('wrong credentialss')
+        if (email == 'mail@bub.dk') {
+            msg = 'Email eller angangskode er forkert'
             res.json({
                 status: 401,
-                email: data.email,
-                password: data.password,
-                error
+                error: msg
             });
         }
 
@@ -72,24 +52,18 @@ console.log(req.cookies.jdc_consent)
 
             // here we have error handling for the query
             if (!results.recordset[0] || !(await bcrypt.compare(password, (results.recordset[0].password)))) {
-                const data = req.body;
-                const error = 'bad Credentials'
-                console.log('wrong credentials')
-                res.json({
-                    status: 401,
-                    email: data.email,
-                    password: data.password,
-                    error: error
-
-                });
-                return;
+                msg = 'Email eller angangskode er forkert'
+                    res.json({
+                        status: 401,
+                        error: msg
+            });
                 // if there's no error and both password and email is correct it will go in this else statement
-            } else {
+            }
+            else {
                 var id = results.recordset[0].personID;
                 var email = results.recordset[0].email;
                 var hashedPassword = results.recordset[0].password;
                 var admin = results.recordset[0].admin;
-                console.log('test' + results.recordset[0].personID)
 
 
                 console.log(results.recordset[0].password)
@@ -105,24 +79,14 @@ console.log(req.cookies.jdc_consent)
                     ),
                     httpOnly: true
                 }
-                console.log('bongo');
-
-                const data = req.body;
-                console.log('bout to send response.json');
                 res.cookie('jwt', token, cookieOptions);
                 res.json({
-                    status: 200,
-                    email: data.email,
-                    password: data.password
+                    status: 200
                 });
             }
-            return;
-        });
-    } catch (error) {
-        console.log(error);
-    };
+        });  
 }
-}
+
 
 exports.register = async (req, res) => {
     var request = new mssql.Request();
@@ -257,7 +221,7 @@ exports.authenticate = async (req, res, next) => {
     }*/
 
     exports.userType = async (req, res) => {
-
+        
         const token = req.cookies.jwt
         var msg = '';
 
@@ -291,6 +255,7 @@ exports.authenticate = async (req, res, next) => {
         }
         return;
     };
+
 
     exports.isUserUser = async (req, res, next) => {
         const token = req.cookies.jwt
