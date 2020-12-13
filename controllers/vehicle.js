@@ -24,9 +24,9 @@ mssql.connect(config, function (err) {
 exports.createMachine = async (req, res) => {
     console.log(req.body);
     const { type, vehicleID, powerBILink, personID, timeSinceMotService } = req.body; // here the input from the user is retrieved from the body of the html
-
+var theTimeToMotService = 0;
     if (!timeSinceMotService){
-        timeSinceMotService = 0;
+        theTimeToMotService  = 0;
     }
     // this query will check if a Vehicle is registered under that ID
     request.query("SELECT * FROM Vehicles WHERE powerBILink = ('" + powerBILink + "')", async (error, results) => {
@@ -50,7 +50,7 @@ exports.createMachine = async (req, res) => {
             // logging if an error occurs
             console.log(error);
         } else {
-            request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+timeSinceMotService+"', "+vehicleID+")", (error) => {
+            request.query("INSERT INTO [dbo].[VehicleDatas] (timeSinceMotService, vehicleID) VALUES ('"+theTimeToMotService+"', "+vehicleID+")", (error) => {
                 if(error){
                 console.log(error)
                 }
