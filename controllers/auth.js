@@ -150,7 +150,7 @@ exports.register = async (req, res) => {
 
                 return res.redirect('/')  /*, {
                     // This messege will be sent to the html called register and then the html will show it to the user
-                    message: 'User registered' // message is sent to html where it will handle it and show it
+                    message: 'User registered' / message is sent to html where it will handle it and show it
                 });*/
             }
         })
