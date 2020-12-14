@@ -27,7 +27,6 @@ exports.createMachine = async (req, res) => {
       var timeToService;
     if (timeSinceMotService == '') {
         timeToService = 0;
-        console.log('Works')
     }
     // this query will check if a Vehicle is registered under that ID
     request.query("SELECT * FROM Vehicles WHERE powerBILink = ('" + powerBILink + "')", async (error, results) => {
@@ -37,7 +36,7 @@ exports.createMachine = async (req, res) => {
         }
         // if an ID is allready used
         if (results.recordset.length > 0) {
-            res.json({message: 'That PowerBI is already in use'}); //res.redirect('createMachine', {
+            res.json({message: 'Det PowerBI Link er allerede i brug'}); //res.redirect('createMachine', {
                  // message is sent to html where it will handle it and show it
             
      return;
@@ -51,7 +50,7 @@ exports.createMachine = async (req, res) => {
                 }
                 // if an ID is allready used
                 if (results.recordset.length > 0) {
-                    res.json({message: 'That vehicleID is allready in use'}); //res.redirect('createMachine', {
+                    res.json({message: 'Det Maskine ID er allerede i brug'}); //res.redirect('createMachine', {
                          // message is sent to html where it will handle it and show it
              return;
                 }
