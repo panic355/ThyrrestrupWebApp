@@ -55,10 +55,6 @@ handleSubmit(e) {
         const { email, password, submitted, loading, error } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
-                <div className="alert alert-info">
-                    Email: test<br />
-                    Password: test
-                </div>
                 <h2>Login</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
                     <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
