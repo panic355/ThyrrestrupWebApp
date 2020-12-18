@@ -21,13 +21,6 @@ router.get('/status', authController.status);
 
 router.get('/logout', authController.logout);
 
-//router.post('/service', authController.servicePost)
-
-
-/*function (req, res, next){
-    var vehicleID = req.body.vehicleID;
-    res.redirect("/editMachine/" + vehicleID) 
-});*/
 router.post('/createMachine', vehicleController.createMachine);
 
 router.post('/fleet', function (req, res) {vehicleListingController.fleet});

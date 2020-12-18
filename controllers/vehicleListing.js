@@ -2,9 +2,6 @@ const mssql = require("mssql");
 var request = new mssql.Request();
 const dotenv = require("dotenv");
 dotenv.config({ path: "./.env" });
-
-
-var cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken')
 
 
@@ -38,17 +35,15 @@ exports.fleet = async (req, res) => {
     var personID = decoded.id
     var userRights = decoded.admin
 
-    console.log('person: '+personID)
-
     var statement = ("");
     var anArray = [];
 
     var vehicleList = []; // the list for vehicles is initiated
-    if (userRights == 'User') { 
+    if (userRights == 'User') {  // this sql script will only get the vehicles that the person owns
         statement = ("select * from Vehicles where personID ="+personID)
     }
 
-    if (userRights == 'Owner') {
+    if (userRights == 'Owner') { // this will get all vehicles if the userType is Owner
         statement = ("select * from Vehicles")
     }
 
@@ -59,9 +54,9 @@ exports.fleet = async (req, res) => {
             return
         }
 
-        if (!vehiclesResult.recordset) {
+        if (!vehiclesResult.recordset) { // check if there is a vehicle on the customer
             console.log("No vehicles on this customer: ")
-            res.sendStatus(500)
+            res.sendStatus(500) // if no vehicles the send response status 500 to frontend
             return
         }
         
@@ -101,13 +96,14 @@ exports.fleet = async (req, res) => {
                 }
                 vehicleList.push(vehicle); // everytime the loop goes thorugh one vehicle it wil be pushed to the list
             }
-            console.log('sending data');
-            res.json(vehicleList)
+            console.log('sending data'); // this will just log if the data is beeing sent
+            res.json(vehicleList) // send a respoinse object in form of json to react
         }
         });
     });
 }
 
+// this next method needs to be implemented in react
 // this method handles alarms and puts a text string instead of a numeric value
 exports.vehicle = async (req, res) => { // this method needs a VehicleID to work
     var vehicleID = req.params.vehicleID

@@ -1,7 +1,4 @@
 const mssql = require("mssql");
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const cookieParser = require('cookie-parser')
 const sa = require('superagent');
 var request = new mssql.Request();
 
@@ -25,7 +22,7 @@ exports.createMachine = async (req, res) => {
     console.log(req.body);
     const { type, vehicleID, powerBILink, personID, timeSinceMotService } = req.body; // here the input from the user is retrieved from the body of the html
       var timeToService;
-    if (timeSinceMotService == '') {
+    if (timeSinceMotService == '') { // this is to avoid vehicles beeing made with missing timeSinceMotService sine it would give an error if not defined
         timeToService = 0;
     }
     // this query will check if a Vehicle is registered under that ID
@@ -36,8 +33,8 @@ exports.createMachine = async (req, res) => {
         }
         // if an ID is allready used
         if (results.recordset.length > 0) {
-            res.json({message: 'Det PowerBI Link er allerede i brug'}); //res.redirect('createMachine', {
-                 // message is sent to html where it will handle it and show it
+            res.json({message: 'Det PowerBI Link er allerede i brug'});
+                 // message is sent to react where it will handle it and show it
             
      return;
         }
@@ -50,8 +47,8 @@ exports.createMachine = async (req, res) => {
                 }
                 // if an ID is allready used
                 if (results.recordset.length > 0) {
-                    res.json({message: 'Det Maskine ID er allerede i brug'}); //res.redirect('createMachine', {
-                         // message is sent to html where it will handle it and show it
+                    res.json({message: 'Det Maskine ID er allerede i brug'});
+                         // message is sent to react where it will handle it and show it
              return;
                 }
                 else {
@@ -68,11 +65,8 @@ console.log(timeToService)
                 console.log(error)
                 }
             })
-            res.json({
+            res.json({ // if the vehicle is created succesfully then respond with a true value in the json response
                 success: true
-            
-                // This messege will be sent to the html called register and then the html will show it to the user
-              //  message: 'Vehicle Registered' // message is sent to html where it will handle it and show it
             });
         }
     });
@@ -84,8 +78,6 @@ console.log(timeToService)
 
 exports.deleteMachine = async (req, res) => {
     var vehicleID = req.params.vehicleID
-    //const { vehicleID } = req.body; // here the input from the user is retrieved from the body of the html
-    console.log('test');
     // this query will check if a Vehicle is registered under that ID
     request.query("SELECT * FROM Vehicles where vehicleID =" + vehicleID, async (error, results) => {
         // error handling for the query
@@ -93,13 +85,13 @@ exports.deleteMachine = async (req, res) => {
         if (error) {
             console.log(error);
             return res.send('deleteMachine', {
-                message: 'Hov der skete en fejl under sletning' // message is sent to html where it will handle it and show it
+                message: 'Hov der skete en fejl under sletning' // message is sent to react where it will handle it and show it
             });
         }
         // if an ID is allready used
         if (results.recordset.length <= 0) {
             return res.send('deleteMachine', {
-                message: 'Maskinen findes ikke i databasen' // message is sent to html where it will handle it and show it
+                message: 'Maskinen findes ikke i databasen' // message is sent to react where it will handle it and show it
             });
         }
     })
@@ -111,8 +103,8 @@ exports.deleteMachine = async (req, res) => {
             console.log(error);
         } else {
             return res.send('deleteMachine', {
-                // This messege will be sent to the html called register and then the html will show it to the user
-                message: 'Maskine slettet' // message is sent to html where it will handle it and show it
+                // This messege will be sent to the react called register and then the html will show it to the user
+                message: 'Maskine slettet' // message is sent to react where it will handle it and show it
             });
         }
     });

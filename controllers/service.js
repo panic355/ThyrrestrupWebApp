@@ -1,7 +1,4 @@
 const mssql = require("mssql");
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
-const cookieParser = require('cookie-parser')
 
 var request = new mssql.Request();
 
@@ -20,7 +17,7 @@ mssql.connect(config, function (err) {
 
 })
 
-exports.service = async (req, res) => {
+exports.service = async (req, res) => { // service is not implemented in react and will need to be changed inorder to work with react
     //var vehicleID = req.params.vehicleID
     var { brokenPart1, brokenPart2, brokenPart3, vehicleID } = req.body;
     // var vehicleID = req.params.vehicleID

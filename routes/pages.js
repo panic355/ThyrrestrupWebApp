@@ -5,11 +5,7 @@ const serviceController = require('../controllers/service');
 const vehicleListingController = require('../controllers/vehicleListing');
 const sa = require('superagent');
 
-const jwt = require('jsonwebtoken')
-const cookieParser = require('cookie-parser')
-
 const axios = require('axios');
-const { request } = require('express');
 const router = express.Router();
 router.use(express.json());
 
@@ -43,7 +39,7 @@ router.get('/fleet', vehicleListingController.fleet, (req, res, next) => {
     });
 });
 // The router for vehicle is defined, now it can be used to get information to the page
-router.get('/vehicle/:vehicleID', authController.isUserOrOwner, vehicleListingController.vehicle, (req, res, next) => {
+router.get('/vehicle/:vehicleID', vehicleListingController.vehicle, (req, res, next) => {
     res.send('vehicle')
 });
 module.exports = router;
