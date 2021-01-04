@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import  App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { CookiesProvider } from "react-cookie";
 
-ReactDOM.render(
-    
+ReactDOM.render( 
 <CookiesProvider> 
 <div id="consent-popup" class="hidden">
         <p>By using this site you agree to our <a href="#">Terms and Conditions</a>.
