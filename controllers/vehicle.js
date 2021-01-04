@@ -1,21 +1,25 @@
 const mssql = require("mssql");
 const sa = require('superagent');
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
 var request = new mssql.Request();
 
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
     server: process.env.DATABASE_HOST,
-    //port: 1433,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE
+  database: process.env.DATABASE,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
 
 });
+
+
 mssql.connect(config, function (err) {
 
     if (err) console.log(err);
 
-})
+});
+
 
 
 exports.createMachine = async (req, res) => {

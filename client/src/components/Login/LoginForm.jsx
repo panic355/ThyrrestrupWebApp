@@ -4,7 +4,7 @@ import { userService } from './user.service';
 console.log("cookies is: "+ document.cookie)
     if (!document.cookie) {
         console.log("success")
-      var ErrorMessage = "Du skal have accepteret cookies før det er muligt at loggeind";
+      var ErrorMessage = "Du skal have accepteret cookies før det er muligt at logge ind";
       }
 
 

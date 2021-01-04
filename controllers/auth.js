@@ -2,6 +2,8 @@ const mssql = require("mssql");
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cookieParser = require('cookie-parser')
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
 
 const nodemailer = require('nodemailer'); // this is a library for sendding emails
 
@@ -11,17 +13,19 @@ var request = new mssql.Request();
 // Database connection is defined here, this will take the information from the ".env" file, if another database is wanted it should be changed in the env file
 var config = ({
     server: process.env.DATABASE_HOST,
-    //port: 1433,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    database: process.env.DATABASE
+  database: process.env.DATABASE,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
 
 });
+
+
 mssql.connect(config, function (err) {
 
     if (err) console.log(err);
 
-})
+});
+
 
 
 let transporter = nodemailer.createTransport({ // This is the mail that the email is beeing sent from, for security reasons this should be defined in the .env folder

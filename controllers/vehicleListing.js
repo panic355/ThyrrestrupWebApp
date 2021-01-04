@@ -17,19 +17,17 @@ var config = ({
 });
 
 
-mssql.connect(config, function (error) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("MsSQL Connected..."); // log to confirm it connected to database
-    }
-  });
+mssql.connect(config, function (err) {
+
+    if (err) console.log(err);
+
+});
 
 
 exports.fleet = async (req, res) => {
     var request = new mssql.Request();
 
-
+    console.log("GETTING FLEET");
     const token = req.cookies.jwt
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     var personID = decoded.id

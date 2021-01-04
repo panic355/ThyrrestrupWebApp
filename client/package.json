@@ -1,8 +1,10 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "main": "./build/index.js",
   "private": true,
   "dependencies": {
+    "@babel/core": "^7.12.10",
     "@restart/hooks": "^0.3.25",
     "bootstrap": "^4.5.3",
     "cookieconsent": "^3.1.1",
@@ -40,10 +42,20 @@
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
+    "@babel/plugin-syntax-jsx": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
     "react-test-renderer": "^17.0.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
   }
 }
