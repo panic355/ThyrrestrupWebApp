@@ -18,15 +18,16 @@ describe("testing-server-database", () => {
       user: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
     };
-    let passed = false;
+   // console.log("test Host: "+process.env.DATABASE_HOST+" DB: "+process.env.DATABASE+" User: "+process.env.DATABASE_USER+" pass: "+process.env.DATABASE_PASSWORD)
     mssql.connect(config, function (error) {
+      let passed = true;
       if (error) {
-        passed = false;
-        console.log(error);
+       passed = false;
       } else {
-        passed = true;
+       passed = true;
       }
+      expect(passed).toBeTruthy();
     });
-    expect(passed).toBeTruthy();
   });
 });
+
