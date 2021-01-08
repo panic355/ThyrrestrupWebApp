@@ -9,25 +9,30 @@ dotenv.config({ path: "./.env" });
 
 app.use("/", route); //routes
 app.use("/auth", auth);
+//let passed = null;
 
-describe("testing-server-database", () => {
-  test("Testing database", () => {
-    var config = {
-      server: process.env.DATABASE_HOST,
+const testinge = () => {
+return new Promise ((resolve, reject) => {
+
+    var config = ({
+      server: "lul",
       database: process.env.DATABASE,
       user: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-    };
-   // console.log("test Host: "+process.env.DATABASE_HOST+" DB: "+process.env.DATABASE+" User: "+process.env.DATABASE_USER+" pass: "+process.env.DATABASE_PASSWORD)
-    mssql.connect(config, function (error) {
-      let passed = true;
-      if (error) {
-       passed = false;
-      } else {
-       passed = true;
-      }
-      expect(passed).toBeTruthy();
+      password: process.env.DATABASE_PASSWORD
     });
+       mssql.connect(config, function (error){
+      if (error) {
+        reject (new Error("WRONG"))
+      }
+      else {
+        resolve(1)
+      }
   });
 });
+}
+    test("Testing database", async (done) => {
+      const passed = await testinge()
+      expect(passed).toBe(1);
+done()
 
+  });
