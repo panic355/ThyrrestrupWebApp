@@ -25,6 +25,7 @@ class BootstrapNavbar extends React.Component {
     this.state = {
       LoggedIn: false,
       userType: "",
+      showNavComps: false,
     };
   }
 
@@ -36,6 +37,11 @@ class BootstrapNavbar extends React.Component {
     fetch("/userType")
       .then((res) => res.json())
       .then((data) => this.setState({ userType: data.userType }));
+      if(this.state.userType == "Administrator"){
+        this.state.showNavComps = true;
+      }else{
+        this.state.showNavComps = false;
+      }
     console.log(this.state.userType);
   }
   render() {
@@ -68,13 +74,13 @@ class BootstrapNavbar extends React.Component {
                     {!this.state.LoggedIn && (
                       <Nav.Link href="/login">Log ind</Nav.Link>
                     )}
-                    {this.state.LoggedIn && (
+                    {this.state.LoggedIn && this.state.showNavComps && (
                       <Nav.Link href="/register">Register</Nav.Link>
                     )}
                     {this.state.LoggedIn && (
                       <Nav.Link href="/fleet">Flåde</Nav.Link>
                     )}
-                    {this.state.LoggedIn && (
+                    {this.state.LoggedIn && this.state.showNavComps && (
                       <Nav.Link href="/createMachine">Lav maskine</Nav.Link>
                     )}
                   </Nav>
