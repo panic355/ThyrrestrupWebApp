@@ -34,17 +34,18 @@ class BootstrapNavbar extends React.Component {
       .then((res) => res.json())
       .then((data) => this.setState({ LoggedIn: data.active }));
 
-    fetch("/userType")
+    await fetch("/userType")
       .then((res) => res.json())
       .then((data) => this.setState({ userType: data.userType }));
       if(this.state.userType == "Administrator"){
-        this.state.showNavComps = true;
+        this.setState({ showNavComps: true })
       }else{
-        this.state.showNavComps = false;
+        this.setState({ showNavComps: false })
       }
     console.log(this.state.userType);
   }
   render() {
+
     return (
       <div>
         <div className="row">
